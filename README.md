@@ -1,4 +1,4 @@
-# CRG Internal Course: Nextflow June 2022
+# Nextflow Course Fall 2023
 
 Reproducible research and data analysis using Nextflow
 
@@ -12,7 +12,7 @@ This slow-paced hands-on course is designed for absolute beginners who want to s
 
 The course will train participants to build Nextflow pipelines and run them with Linux containers.
 
-It is designed to provide trainees with short and frequent hands-on sessions, while keeping theoretical sessions to a minimum.
+It is designed to provide trainees with short and frequent hands-on sessions while keeping theoretical sessions to a minimum.
 
 <!--Trainees will work in a dedicated [AWS environment](https://en.wikipedia.org/wiki/AWS).-->
 
@@ -30,11 +30,11 @@ It is designed to provide trainees with short and frequent hands-on sessions, wh
 ### Prerequisite / technical requirements
 
 Being comfortable working with the CLI (command-line interface) in a Linux-based environment.
-Knowledge of containers is not mandatory. The course materials is online in the dedicated GitHub page for self-learning.
+Knowledge of containers is not mandatory. The course materials are online on the dedicated GitHub page for self-learning.
 
-Practitioners will need to connect during the course to a remote server via the "ssh" protocotol. You can learn about it [here](https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work)
+Practitioners will need to connect during the course to a remote server via the "ssh" protocol. You can learn about it [here](https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work)
 
-Those who follow the course should be able to use a command-line/screen-oriented text editor (such as nano or vi/vim, which are already available on the server) or to be able to use an editor able to connect remotely. For sake of information, below the basics of "nano":
+Those who follow the course should be able to use a command-line/screen-oriented text editor (such as nano or vi/vim, which are already available on the server) or to be able to use an editor able to connect remotely. For the sake of information, below are the basics of "nano":
 https://wiki.gentoo.org/wiki/Nano/Basics_Guide
 
 Having a [GitHub account](https://github.com/join) is recommended. 
@@ -73,7 +73,6 @@ Knowing concepts about Linux containers is recommended.
 * 14:30-15:30 Modules
 * 15:30-16:00 Coffee break
 * 16:00-17:00 Tower
-
 
 
 ## Acknowledgements
