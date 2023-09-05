@@ -10,8 +10,6 @@ About the course
 
 This slow-paced hands-on internal course is designed for absolute beginners who want to start using  `Nextflow DSL2 <https://www.nextflow.io>`_ to achieve reproducibility of the data analysis.
 
-* `Course page <https://www.crg.eu/en/event/coursescrg-reproducible-research-and-data-analysis-using-containers-nextflow-2022>`_
-
 
 .. |luca| image:: images/lcozzuto.jpg
   :alt: Alternative text
@@ -41,26 +39,19 @@ This slow-paced hands-on internal course is designed for absolute beginners who 
 Outline
 ============
 
-This Linux Containers and Nextflow course will train participants to build Nextflow pipelines and run them with `Singularity <https://sylabs.io/singularity/>`_ containers.
-
-It is designed to provide trainees with short and frequent hands-on sessions, while keeping theoretical sessions to a minimum.
-
-The course will be fully virtual via the `Zoom <https://zoom.us/>`_ platform. The link will be provided via the `CRG learning platform <https://moodle.crg.eu/>`_.
-
-.. 
-        Trainees will work in a dedicated `AWS environment <https://en.wikipedia.org/wiki/AWS/>`_.
-
+This Nextflow course will train participants to build Nextflow pipelines and run them with Linux containers.
 
 .. _home-page-learning:
 
 Learning objectives
 ============
 
-* Locate and fetch Nextflow pipelines from dedicated repositories.
 * Execute/Run a Nextflow pipeline.
 * Describe and explain Nextflow basic concepts.
 * Test and modify a Nextflow pipeline.
 * Implement short blocks of code into a Nextflow pipeline.
+* Understand, run and build Linux containers
+* Use containers in Nextflow processes
 * Develop a Nextflow pipeline from scratch.
 * Run a pipeline in diverse computational environments (local, HPC, cloud).
 * Share a pipeline.
@@ -80,60 +71,4 @@ Those who follow the course should be able to use a command-line/screen-oriented
 
 Having a `GitHub account <https://github.com/join>`_ is recommended.
 
-.. _home-page-dates:
-
-Dates, time, location
-============
-
-* Dates: Jun 30 - July 1, 2022.
-
-* 9:30 - 17:00 **CET**
-
-
-* Location: CRG training room.
-
-.. _home-page-program:
-
-
-Suggested program
-============
-
-
-.. _nextflow_1-page:
-
-Day 1: Understand and run a basic Nexflow pipeline (June 30)
--------------
-
-* 09:30-11:00 Introduction to Nextflow
-* 11:00-11:30 Coffee break
-* 11:30-13:30 Making simple scripts: channels operators and workflows
-
-.. _nextflow_2-page:
-
-Day 1: Write, modify and run a complex pipeline (Jun 30)
--------------
-
-* 14:30-15:30 More complex scripts: Directive and resuming
-* 15:30-16:00 Coffee break
-* 16:00-17:00 Decoupling resources, parameters and main script
-
-
-
-.. _nextflow_3-page:
-
-Day 2: Run a Nextflow pipeline in different environments (Jul 1)
--------------
-
-* 09:30-11:00 Singularity and more processes.
-* 11:00-11:30 Coffee break
-* 11:30-13:30 Profiles and cloud
-
-.. _nextflow_4-page:
-
-Day 2: Nextflow modules and Tower
--------------
-
-* 14:30-15:30 Modules
-* 15:30-16:00 Coffee break
-* 16:00-17:00 Tower
 
