@@ -62,6 +62,6 @@ html_theme = 'sphinx_rtd_theme'
 
 # The URL which points to the root of the HTML documentation.
 # It is used to indicate the location of document like canonical_url
-html_baseurl = 'https://biocorecrg.github.io/CRG_Nextflow_Jun_2022/'
+html_baseurl = 'https://biocorecrg.github.io/nextflow-course-2023-fall/'
 
 # html_logo = html_favicon = '_images/sphinx-notes.png'
