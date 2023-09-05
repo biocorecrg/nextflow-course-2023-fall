@@ -5,7 +5,7 @@ Courses @ CRG: Reproducible research and data analysis using Containers & Nextfl
 *******************
 
 
-`GitHub repository <https://github.com/biocorecrg/CRG_Nextflow_Jun_2022>`_
+`GitHub repository <https://github.com/biocorecrg/nextflow-course-2023-fall>`_
 
 Contents:
 
@@ -15,6 +15,7 @@ Contents:
    about
    nextflow_1
    nextflow_2
+   containers
    nextflow_3
    nextflow_4
    nextflow_5
