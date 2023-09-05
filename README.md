@@ -1,8 +1,6 @@
-# Nextflow Course Fall 2023
+# Nextflow Course 2023 Fall
 
 Reproducible research and data analysis using Nextflow
-
-
 
 ## About the course
 
@@ -23,6 +21,8 @@ It is designed to provide trainees with short and frequent hands-on sessions whi
 * Describe and explain Nextflow basic concepts.
 * Test and modify a Nextflow pipeline.
 * Implement short blocks of code into a Nextflow pipeline.
+* Understand, run and build Linux containers
+* Use containers in Nextflow processes
 * Develop a Nextflow pipeline from scratch.
 * Run a pipeline in diverse computational environments (local, HPC, cloud).
 * Share a pipeline.
@@ -50,29 +50,34 @@ Knowing concepts about Linux containers is recommended.
 
 ## Program
   
-### Day 1: Understand and run a basic Nexflow pipeline (June 30)
+### Day 1: Understand and run a basic Nexflow pipeline
 
 * 09:30-11:00 Introduction to Nextflow
 * 11:00-11:30 Coffee break
 * 11:30-13:30 Making simple scripts: channels operators and workflows
 
-### Day 1: Write, modify and run a complex pipeline (Jun 30)
+### Day 1: Write, modify and run a complex pipeline
 
 * 14:30-15:30 More complex scripts: Directive and resuming
 * 15:30-16:00 Coffee break
 * 16:00-17:00 Decoupling resources, parameters and main script
 
+### Day 2: Linux containers
 
-### Day 2: Run a Nextflow pipeline in different environments (Jul 1)
+* 09:30-11:00 - Linux containers and Docker
+* 11:00-11.30 - Coffee break
+* 11:30-13.30 - Singularity/Apptainer
+
+### Day 3: Run a Nextflow pipeline in different environments
 
 * 09:30-11:00 Singularity and more processes
 * 11:00-11:30 Coffee break
 * 11:30-13:30 Profiles and cloud
 
-### Day 2: Nextflow modules and Tower
-* 14:30-15:30 Modules
-* 15:30-16:00 Coffee break
-* 16:00-17:00 Tower
+### Day 4: Nextflow modules and Tower
+* 09:30-11:00 Modules
+* 11:00-11:30 Coffee break
+* 11:30-13:30 Tower
 
 
 ## Acknowledgements

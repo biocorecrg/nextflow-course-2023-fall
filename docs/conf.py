@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'CRG Course: Nextflow June 2022'
+project = u'Nextflow Course 2023 Fall'
 
 # -- General configuration ---------------------------------------------------
 
