@@ -4,10 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Courses @ CRG: Reproducible research and data analysis using Containers &amp; Nextflow 2022 &mdash; CRG Course: Nextflow June 2022  documentation</title>
+  <title>Nextflow 5 &mdash; CRG Course: Nextflow June 2022  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="canonical" href="https://biocorecrg.github.io/nextflow-course-2023-fall/index.html" />
+    <link rel="canonical" href="https://biocorecrg.github.io/nextflow-course-2023-fall/nextflow_5.html" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,7 +21,7 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="About the course" href="about.html" /> 
+    <link rel="prev" title="Nextflow 4" href="nextflow_4.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +32,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             CRG Course: Nextflow June 2022
           </a>
 <div role="search">
@@ -43,13 +43,16 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About the course</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_1.html">Nextflow 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_2.html">Nextflow 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_3.html">Nextflow 3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_4.html">Nextflow 4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nextflow_5.html">Nextflow 5</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Nextflow 5</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-nextflow-on-the-crg-hpc">Running nextflow on the CRG HPC</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -58,17 +61,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">CRG Course: Nextflow June 2022</a>
+          <a href="index.html">CRG Course: Nextflow June 2022</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Courses &#64; CRG: Reproducible research and data analysis using Containers &amp; Nextflow 2022</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Nextflow 5</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/nextflow_5.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -76,27 +79,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="courses-crg-reproducible-research-and-data-analysis-using-containers-nextflow-2022">
-<span id="home-page"></span><h1>Courses &#64; CRG: Reproducible research and data analysis using Containers &amp; Nextflow 2022<a class="headerlink" href="#courses-crg-reproducible-research-and-data-analysis-using-containers-nextflow-2022" title="Link to this heading"></a></h1>
-<p><a class="reference external" href="https://github.com/biocorecrg/CRG_Nextflow_Jun_2022">GitHub repository</a></p>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="about.html">About the course</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nextflow_1.html">Nextflow 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nextflow_2.html">Nextflow 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nextflow_3.html">Nextflow 3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nextflow_4.html">Nextflow 4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nextflow_5.html">Nextflow 5</a></li>
-</ul>
+  <section id="nextflow-5">
+<span id="nextflow-5-page"></span><h1>Nextflow 5<a class="headerlink" href="#nextflow-5" title="Link to this heading"></a></h1>
+<section id="running-nextflow-on-the-crg-hpc">
+<h2>Running nextflow on the CRG HPC<a class="headerlink" href="#running-nextflow-on-the-crg-hpc" title="Link to this heading"></a></h2>
+<p>For running on the CRG HPC you can use the <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html#sge">executor SGE</a></p>
+<p>The HPC has several tools already installed that can be “loaded” as modules, for instance you might want to load <strong>singularity version 3.7.0</strong> for being used with your pipelines.</p>
+<p>For doing so you can add this string of code to your <strong>.bashrc</strong>, that is a file that is run every time you log to a remote computer in the HPC or you submit a job:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vim $HOME/.bashrc</span>
+</pre></div>
 </div>
+<p>Then add this at the end</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span>EasyBuild
+<span class="go">module use /software/as/el7.2/EasyBuild/CRG/modules/all</span>
+<span class="go">module load Singularity/3.7.0</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="about.html" class="btn btn-neutral float-right" title="About the course" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nextflow_4.html" class="btn btn-neutral float-left" title="Nextflow 4" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
