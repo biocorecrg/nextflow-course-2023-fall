@@ -7,12 +7,12 @@ Nextflow 3
 Using Singularity
 =======================
 
-We recommend to use Singularity instead of Docker in a HPC environments.
+We recommend using Singularity instead of Docker in HPC environments.
 This can be done using the Nextflow parameter `-with-singularity` without changing the code.
 
-Nextflow will take care of **pulling, converting and storing the image** for you. This will be done only once and then Nextflow will use the stored image for further executions.
+Nextflow will take care of **pulling, converting, and storing the image** for you. This will be done only once and then Nextflow will use the stored image for further executions.
 
-Within an AWS main node both Docker and Singularity are available. While within the AWS batch system only Docker is available.
+Within an AWS main node, both Docker and Singularity are available. While within the AWS batch system, only Docker is available.
 
 .. code-block:: console
 
@@ -42,7 +42,7 @@ Let's inspect the folder `singularity`:
 
 This singularity image can be used to execute the code outside the pipeline **exactly the same way** as inside the pipeline.
 
-Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:
+Sometimes we can be interested in launching only a specific job, because it might fail or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:
 
 .. code-block:: console
 
@@ -95,9 +95,9 @@ Adding more processes
 ======================
 
 We can build a pipeline incrementally adding more and more processes.
-Nextflow will take care of the dependencies between the input / output and of the parallelization.
+Nextflow will take care of the dependencies between the input/output and the parallelization.
 
-Let's add to the **test2.nf** pipeline two additional steps, indexing of the reference genome and the read alignment using `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__. For that we will have to modify the test2.nf, params.config and nexflow.config files (the new script is available in the **test3 folder**).
+Let's add to the **test2.nf** pipeline two additional steps, indexing of the reference genome and the read alignment using `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__. For that, we will have to modify the test2.nf, params.config and nexflow.config files (the new script is available in the **test3 folder**).
 
 In **params.config**, we have to add new parameters:
 
@@ -125,7 +125,7 @@ This way, the **singleton channel** called **reference** is created. Its content
 
 
 
-And we have to add two new processes. The first one is for the indexing the reference genome (with `bowtie-build`):
+And we have to add two new processes. The first one is for indexing the reference genome (with `bowtie-build`):
 
 
 .. literalinclude:: ../nextflow/test3/test3.nf
@@ -133,11 +133,11 @@ And we have to add two new processes. The first one is for the indexing the refe
    :emphasize-lines: 82-101
 
 
-Since bowtie indexing requires unzipped reference fasta file, we first **gunzip** it, then build the reference index, and finally remove the unzipped file.
+Since bowtie indexing requires an unzipped reference fasta file, we first **gunzip** it, then build the reference index, and finally remove the unzipped file.
 
 The output channel is organized as a **tuple**; i.e., a list of elements.
 
-The first element of the list is the **name of the index as a value**, the second is a **list of files constituting the index**.
+The first element of the list is the **name of the index as a value**, and the second is a **list of files constituting the index**.
 
 The former is needed for building the command line of the alignment step, the latter are the files needed for the alignment.
 
@@ -152,7 +152,7 @@ There are two different input channels, the **index** and **reads**.
 
 The index name specified by **refname** is used for building the command line; while the index files, indicated by **ref_files**, are linked to the current directory by using the **path** qualifier.
 
-We also produced two kind of outputs, the **alignments** and **logs**.
+We also produced two kinds of outputs, the **alignments** and **logs**.
 The first one is the one we want to keep as a final result; for that, we specify the **pattern** parameter in **publishDir**.
 
 .. code-block:: groovy
@@ -160,7 +160,7 @@ The first one is the one we want to keep as a final result; for that, we specify
 	publishDir alnOutputFolder, pattern: '*.sam'
 
 
-The second output will be passed to the next process, that is, the multiQC process. To distinguish the outputs let's assign them different names.
+The second output will be passed to the next process, which is the multiQC process. To distinguish the outputs let's assign them different names.
 
 .. code-block:: groovy
 
@@ -184,7 +184,7 @@ Profiles
 
 For deploying a pipeline in a cluster or Cloud, in the **nextflow.config** file, we need to indicate what kind of the `executor <https://www.nextflow.io/docs/latest/process.html#executor>`__ to use.
 
-In the Nextflow framework architecture, the executor indicates which the **batch-queue system** to use to submit jobs to a HPC or to Cloud.
+In the Nextflow framework architecture, the executor indicates which **batch-queue system** to use to submit jobs to an HPC or to Cloud.
 
 The executor is completely abstracted, so you can switch from SGE to SLURM just by changing this parameter in the configuration file.
 
@@ -218,7 +218,7 @@ This profile indicates that the system uses **Sun Grid Engine** as a job schedul
 Deployment in the AWS cloud
 =============================
 
-The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular, we will use **AWS Batch** that allows the execution of containerised workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder `/mnt` by typing the command **df**).
+The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular, we will use **AWS Batch** that allows the execution of containerized workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder `/mnt` by typing the command **df**).
 
 .. literalinclude:: ../nextflow/test3/nextflow.config
    :language: groovy
@@ -226,7 +226,7 @@ The final profile is for running the pipeline in the **Amazon Cloud**, known as 
 
 
 We indicate the **AWS specific parameters** (**region** and **cliPath**) and the executor **awsbatch**.
-Then we indicate the working directory, that should be mounted as `S3 volume <https://aws.amazon.com/s3/>`__.
+Then we indicate the working directory, which should be mounted as `S3 volume <https://aws.amazon.com/s3/>`__.
 This is mandatory when running Nextflow on the cloud.
 
 We can now launch the pipeline indicating `-profile cloud`:
@@ -236,11 +236,11 @@ We can now launch the pipeline indicating `-profile cloud`:
 	nextflow run test3.nf -bg -with-docker -profile cloud > log
 
 
-Note that there is no longer a **work** folder in the directory where test3.nf is located, because, in the AWS cloud, the output is copied locally in the folder **/mnt/nf-class-bucket-NNN/work** (you can see the mounted folder - and the correspondign number - typing **df**).
+Note that there is no longer a **work** folder in the directory where test3.nf is located, because, in the AWS cloud, the output is copied locally in the folder **/mnt/nf-class-bucket-NNN/work** (you can see the mounted folder - and the corresponding number - typing **df**).
 
 The multiqc report can be seen on the AWS webpage at https://nf-class-bucket-NNN.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html
 
-But you need before to change permissions for that file as (where NNNN is the number of your bucket):
+But you need before to change permissions for that file (where NNNN is the number of your bucket):
 
 .. code-block:: console
 
@@ -274,7 +274,7 @@ Modify the **test3.nf** file to make two sub-workflows:
 * for fastqc of fastq files and bowtie alignment;
 * for a fastqc analysis of the aligned files produced by bowtie.
 
-For convenience you can use the multiqc config file called **config.yaml** in the multiqc process.
+For convenience, you can use the multiqc config file called **config.yaml** in the multiqc process.
 
 .. raw:: html
 
