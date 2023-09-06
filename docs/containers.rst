@@ -384,7 +384,7 @@ Volumes
 
 Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.
 
-Syntax: **--volume/-v** *host:container*
+Syntax: **\--volume/-v** *host:container*
 
 .. code-block:: console
 
@@ -509,7 +509,7 @@ Same as:
   docker build --file Dockerfile .
 
 
-Syntax: **--file / -f**
+Syntax: **\--file / -f**
 
 **.** stands for the context (in this case, current directory) of the build process. This makes sense if copying files from filesystem, for instance. **IMPORTANT**: Avoid contexts (directories) overpopulated with files (even if not actually used in the recipe).
 
