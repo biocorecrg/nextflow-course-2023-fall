@@ -587,8 +587,6 @@ A more complex recipe (save it in a text file named **Dockerfile**:
 
   FROM ubuntu:22.04
 
-  MAINTAINER Toni Hermoso Pulido <toni.hermoso@crg.eu>
-
   WORKDIR ~
 
   RUN apt-get update && apt-get -y upgrade
