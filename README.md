@@ -44,9 +44,11 @@ Knowing concepts about Linux containers is recommended.
 
 ## Dates, time, location
 
-* Dates: 30th of June and 1st of July 2022. Time: 9:30 - 17:00h (CET)
+* Dates: From 12th of September to 15th of September 2023.
+* Time: 12/09/23         9:30 - 17:00h (CET)
+* Time: 13-14-15 09/23   9:30 - 13:00h (CET)
 
-* Location: virtual, via Zoom.
+* Location: Training room, CRG.
 
 ## Program
   
