@@ -34,6 +34,52 @@ This slow-paced hands-on internal course is designed for absolute beginners who 
      - |toni|
      - |julia|
 
+
+.. _home-page-dates
+
+Dates, time, location
+=========================
+
+* Dates: From 12th of September to 15th of September 2023.
+* Time: 12/09/23         9:30 - 17:00h (CET)
+* Time: 13-14-15 09/23   9:30 - 13:00h (CET)
+
+* Location: Training room, CRG.
+
+Program
+------------------------
+  
+*Day 1: Understand and run a basic Nexflow pipeline*
+
+* 09:30-11:00 Introduction to Nextflow
+* 11:00-11:30 Coffee break
+* 11:30-13:00 Making simple scripts: channels operators and workflows
+
+*Day 1: Write, modify, and run a complex pipeline*
+
+* 14:30-15:30 More complex scripts: Directive and resuming
+* 15:30-16:00 Coffee break
+* 16:00-17:00 Decoupling resources, parameters and main script
+
+*Day 2: Linux containers*
+
+* 09:30-11:00 - Linux containers and Docker
+* 11:00-11.30 - Coffee break
+* 11:30-13.00 - Singularity/Apptainer
+
+*Day 3: Run a Nextflow pipeline in different environments*
+
+* 09:30-11:00 Singularity and more processes
+* 11:00-11:30 Coffee break
+* 11:30-13:00 Profiles and cloud
+
+*Day 4: Nextflow modules and Tower*
+
+* 09:30-11:00 Modules
+* 11:00-11:30 Coffee break
+* 11:30-13:00 Tower
+
+
 .. _home-page-outline:
 
 Outline
