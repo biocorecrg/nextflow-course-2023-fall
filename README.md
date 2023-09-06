@@ -56,7 +56,7 @@ Knowing concepts about Linux containers is recommended.
 
 * 09:30-11:00 Introduction to Nextflow
 * 11:00-11:30 Coffee break
-* 11:30-13:30 Making simple scripts: channels operators and workflows
+* 11:30-13:00 Making simple scripts: channels operators and workflows
 
 ### Day 1: Write, modify, and run a complex pipeline
 
