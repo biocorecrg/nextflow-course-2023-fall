@@ -89,10 +89,10 @@
 <span id="nextflow-3-page"></span><h1>Nextflow 3<a class="headerlink" href="#nextflow-3" title="Link to this heading"></a></h1>
 <section id="using-singularity">
 <h2>Using Singularity<a class="headerlink" href="#using-singularity" title="Link to this heading"></a></h2>
-<p>We recommend to use Singularity instead of Docker in a HPC environments.
+<p>We recommend using Singularity instead of Docker in HPC environments.
 This can be done using the Nextflow parameter <cite>-with-singularity</cite> without changing the code.</p>
-<p>Nextflow will take care of <strong>pulling, converting and storing the image</strong> for you. This will be done only once and then Nextflow will use the stored image for further executions.</p>
-<p>Within an AWS main node both Docker and Singularity are available. While within the AWS batch system only Docker is available.</p>
+<p>Nextflow will take care of <strong>pulling, converting, and storing the image</strong> for you. This will be done only once and then Nextflow will use the stored image for further executions.</p>
+<p>Within an AWS main node, both Docker and Singularity are available. While within the AWS batch system, only Docker is available.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test2.nf -with-singularity -bg &gt; log</span>
 
 <span class="go">tail -f log</span>
@@ -115,7 +115,7 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 </pre></div>
 </div>
 <p>This singularity image can be used to execute the code outside the pipeline <strong>exactly the same way</strong> as inside the pipeline.</p>
-<p>Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:</p>
+<p>Sometimes we can be interested in launching only a specific job, because it might fail or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd work/da/eb7564*/</span>
 </pre></div>
 </div>
@@ -156,8 +156,8 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 <section id="adding-more-processes">
 <h2>Adding more processes<a class="headerlink" href="#adding-more-processes" title="Link to this heading"></a></h2>
 <p>We can build a pipeline incrementally adding more and more processes.
-Nextflow will take care of the dependencies between the input / output and of the parallelization.</p>
-<p>Let’s add to the <strong>test2.nf</strong> pipeline two additional steps, indexing of the reference genome and the read alignment using <a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a>. For that we will have to modify the test2.nf, params.config and nexflow.config files (the new script is available in the <strong>test3 folder</strong>).</p>
+Nextflow will take care of the dependencies between the input/output and the parallelization.</p>
+<p>Let’s add to the <strong>test2.nf</strong> pipeline two additional steps, indexing of the reference genome and the read alignment using <a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a>. For that, we will have to modify the test2.nf, params.config and nexflow.config files (the new script is available in the <strong>test3 folder</strong>).</p>
 <p>In <strong>params.config</strong>, we have to add new parameters:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
 <span class="w">	</span><span class="n">reads</span><span class="w">		</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$baseDir/../../testdata/*.fastq.gz&quot;</span>
@@ -337,7 +337,7 @@ Nextflow will take care of the dependencies between the input / output and of th
 <span class="n">multiqcOutputFolder</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/output_multiQC&quot;</span>
 </pre></div>
 </div>
-<p>And we have to add two new processes. The first one is for the indexing the reference genome (with <cite>bowtie-build</cite>):</p>
+<p>And we have to add two new processes. The first one is for indexing the reference genome (with <cite>bowtie-build</cite>):</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/* </span>
@@ -497,9 +497,9 @@ Nextflow will take care of the dependencies between the input / output and of th
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Since bowtie indexing requires unzipped reference fasta file, we first <strong>gunzip</strong> it, then build the reference index, and finally remove the unzipped file.</p>
+<p>Since bowtie indexing requires an unzipped reference fasta file, we first <strong>gunzip</strong> it, then build the reference index, and finally remove the unzipped file.</p>
 <p>The output channel is organized as a <strong>tuple</strong>; i.e., a list of elements.</p>
-<p>The first element of the list is the <strong>name of the index as a value</strong>, the second is a <strong>list of files constituting the index</strong>.</p>
+<p>The first element of the list is the <strong>name of the index as a value</strong>, and the second is a <strong>list of files constituting the index</strong>.</p>
 <p>The former is needed for building the command line of the alignment step, the latter are the files needed for the alignment.</p>
 <p>The second process <strong>bowtieAln</strong> is the alignment step:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
@@ -663,12 +663,12 @@ Nextflow will take care of the dependencies between the input / output and of th
 </div>
 <p>There are two different input channels, the <strong>index</strong> and <strong>reads</strong>.</p>
 <p>The index name specified by <strong>refname</strong> is used for building the command line; while the index files, indicated by <strong>ref_files</strong>, are linked to the current directory by using the <strong>path</strong> qualifier.</p>
-<p>We also produced two kind of outputs, the <strong>alignments</strong> and <strong>logs</strong>.
+<p>We also produced two kinds of outputs, the <strong>alignments</strong> and <strong>logs</strong>.
 The first one is the one we want to keep as a final result; for that, we specify the <strong>pattern</strong> parameter in <strong>publishDir</strong>.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">publishDir</span><span class="w"> </span><span class="n">alnOutputFolder</span><span class="o">,</span><span class="w"> </span><span class="nl">pattern:</span><span class="w"> </span><span class="s1">&#39;*.sam&#39;</span>
 </pre></div>
 </div>
-<p>The second output will be passed to the next process, that is, the multiQC process. To distinguish the outputs let’s assign them different names.</p>
+<p>The second output will be passed to the next process, which is the multiQC process. To distinguish the outputs let’s assign them different names.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
 <span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.sam&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_sam</span>
 <span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.log&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_log</span>
@@ -839,7 +839,7 @@ The first one is the one we want to keep as a final result; for that, we specify
 <section id="profiles">
 <h2>Profiles<a class="headerlink" href="#profiles" title="Link to this heading"></a></h2>
 <p>For deploying a pipeline in a cluster or Cloud, in the <strong>nextflow.config</strong> file, we need to indicate what kind of the <a class="reference external" href="https://www.nextflow.io/docs/latest/process.html#executor">executor</a> to use.</p>
-<p>In the Nextflow framework architecture, the executor indicates which the <strong>batch-queue system</strong> to use to submit jobs to a HPC or to Cloud.</p>
+<p>In the Nextflow framework architecture, the executor indicates which <strong>batch-queue system</strong> to use to submit jobs to an HPC or to Cloud.</p>
 <p>The executor is completely abstracted, so you can switch from SGE to SLURM just by changing this parameter in the configuration file.</p>
 <p>You can group different classes of configuration or <strong>profiles</strong> within a single <strong>nextflow.config</strong> file.</p>
 <p>Let’s inspect the <strong>nextflow.config</strong> file in <strong>test3</strong> folder. We can see three different profiles:</p>
@@ -975,7 +975,7 @@ The first one is the one we want to keep as a final result; for that, we specify
 </section>
 <section id="deployment-in-the-aws-cloud">
 <h2>Deployment in the AWS cloud<a class="headerlink" href="#deployment-in-the-aws-cloud" title="Link to this heading"></a></h2>
-<p>The final profile is for running the pipeline in the <strong>Amazon Cloud</strong>, known as Amazon Web Services or AWS. In particular, we will use <strong>AWS Batch</strong> that allows the execution of containerised workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder <cite>/mnt</cite> by typing the command <strong>df</strong>).</p>
+<p>The final profile is for running the pipeline in the <strong>Amazon Cloud</strong>, known as Amazon Web Services or AWS. In particular, we will use <strong>AWS Batch</strong> that allows the execution of containerized workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder <cite>/mnt</cite> by typing the command <strong>df</strong>).</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span><span class="w"> </span><span class="s2">&quot;$baseDir/params.config&quot;</span>
 
 <span class="n">process</span><span class="o">.</span><span class="na">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
@@ -1037,15 +1037,15 @@ The first one is the one we want to keep as a final result; for that, we specify
 </pre></div>
 </div>
 <p>We indicate the <strong>AWS specific parameters</strong> (<strong>region</strong> and <strong>cliPath</strong>) and the executor <strong>awsbatch</strong>.
-Then we indicate the working directory, that should be mounted as <a class="reference external" href="https://aws.amazon.com/s3/">S3 volume</a>.
+Then we indicate the working directory, which should be mounted as <a class="reference external" href="https://aws.amazon.com/s3/">S3 volume</a>.
 This is mandatory when running Nextflow on the cloud.</p>
 <p>We can now launch the pipeline indicating <cite>-profile cloud</cite>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test3.nf -bg -with-docker -profile cloud &gt; log</span>
 </pre></div>
 </div>
-<p>Note that there is no longer a <strong>work</strong> folder in the directory where test3.nf is located, because, in the AWS cloud, the output is copied locally in the folder <strong>/mnt/nf-class-bucket-NNN/work</strong> (you can see the mounted folder - and the correspondign number - typing <strong>df</strong>).</p>
+<p>Note that there is no longer a <strong>work</strong> folder in the directory where test3.nf is located, because, in the AWS cloud, the output is copied locally in the folder <strong>/mnt/nf-class-bucket-NNN/work</strong> (you can see the mounted folder - and the corresponding number - typing <strong>df</strong>).</p>
 <p>The multiqc report can be seen on the AWS webpage at <a class="reference external" href="https://nf-class-bucket-NNN.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html">https://nf-class-bucket-NNN.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html</a></p>
-<p>But you need before to change permissions for that file as (where NNNN is the number of your bucket):</p>
+<p>But you need before to change permissions for that file (where NNNN is the number of your bucket):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">chmod 775 /mnt/nf-class-bucket-NNNN/results/ouptut_multiQCmultiqc_report.html</span>
 </pre></div>
 </div>
@@ -1066,7 +1066,7 @@ This is mandatory when running Nextflow on the cloud.</p>
 <li><p>for fastqc of fastq files and bowtie alignment;</p></li>
 <li><p>for a fastqc analysis of the aligned files produced by bowtie.</p></li>
 </ul>
-<p>For convenience you can use the multiqc config file called <strong>config.yaml</strong> in the multiqc process.</p>
+<p>For convenience, you can use the multiqc config file called <strong>config.yaml</strong> in the multiqc process.</p>
 <details>
 <summary><a>Solution</a></summary><div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
