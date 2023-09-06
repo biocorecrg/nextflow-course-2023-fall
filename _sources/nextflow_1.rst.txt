@@ -18,11 +18,11 @@ What is Nextflow?
 .. image:: images/nextf_groovy.png
   :width: 600
 
-`Nextflow <https://www.nextflow.io>`__ is a domain specific language (DSL) for workflow orchestration that stems from `Groovy <https://groovy-lang.org/>`__. It enables scalable and reproducible workflows using software containers.
+`Nextflow <https://www.nextflow.io>`__ is a domain-specific language (DSL) for workflow orchestration that stems from `Groovy <https://groovy-lang.org/>`__. It enables scalable and reproducible workflows using software containers.
 It was developed at the `CRG <www.crg.eu>`__ in the Lab of Cedric Notredame by `Paolo Di Tommaso <https://github.com/pditommaso>`__.
-The Nextflow documentation is `available here <https://www.nextflow.io/docs/latest/>`__ and you can ask help to the community using their `gitter channel <https://gitter.im/nextflow-io/nextflow>`__ or joining their `slack channel <https://join.slack.com/t/nextflow/shared_invite/zt-11iwlxtw5-R6SNBpVksOJAx5sPOXNrZg>`__. 
+The Nextflow documentation is `available here <https://www.nextflow.io/docs/latest/>`__ and you can ask help to the community joining their `slack channel <https://join.slack.com/t/nextflow/shared_invite/zt-11iwlxtw5-R6SNBpVksOJAx5sPOXNrZg>`__. 
 
-In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course we will use exclusively DSL2. It is currently developed and mantained by the company `Seqera Labs <https://seqera.io/>`__
+In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course, we will use exclusively DSL2. It is currently developed and maintained by the company `Seqera Labs <https://seqera.io/>`__ a spin-off from the CRG. 
 
 What is Nextflow for?
 ---------------------
@@ -34,17 +34,12 @@ It was published in `Nature Biotechnology in 2017 <https://pubmed.ncbi.nlm.nih.g
 .. image:: images/NF_pub.png
   :width: 600
 
-Searching Nextflow in Google scholar gives you currently 8,940 results. 
+Searching for Nextflow in Google Scholar gives you currently 10,700 results. 
 
 A curated list of `Nextflow pipelines <https://github.com/nextflow-io/awesome-nextflow>`__.
 
 Many pipelines written collaboratively are provided by the `NF-core <https://nf-co.re/pipelines>`__ project.
 
-Some pipelines written in Nextflow have been used for the SARS-Cov-2 analysis too, for example:
-
-- The `artic Network <https://artic.network/ncov-2019>`__ pipeline `ncov2019-artic-nf <https://github.com/connor-lab/ncov2019-artic-nf>`__.
-- The `CRG / EGA viral Beacon <https://covid19beacon.crg.eu/info>`__ pipeline `Master of Pores <https://github.com/biocorecrg/master_of_pores>`__.
-- The nf-core pipeline `viralrecon <https://nf-co.re/viralrecon>`__.
 
 
 Main advantages
@@ -54,15 +49,15 @@ Main advantages
 - **Fast prototyping**
 
 You can quickly write a small pipeline that can be **expanded incrementally**.
-**Each task is independent** and can be easily added to other. You can reuse scripts without re-writing or adapting them.
+**Each task is independent** and can be easily added to others. You can reuse scripts without re-writing or adapting them.
 
 - **Reproducibility**
 
-Nextflow supports **Docker** and **Singularity** containers technology. Their use will make the pipelines reproducible in any Unix environment. Nextflow is integrated with **GitHub code sharing platform**, so you can call directly a specific version of a pipeline from a repository, download and use it on-the-fly.
+Nextflow supports many container technologies like Docker, Singularity / Apptainer, and Podman. Their use will make the pipelines reproducible in any Unix environment. Nextflow is integrated with **GitHub code sharing platform**, so you can call directly a specific version of a pipeline from a repository, download and use it on-the-fly.
 
 - **Portability**
 
-Nextflow can be executed on **multiple platforms** without modifiying the code. It supports several schedulers such as **SGE, LSF, SLURM, PBS, HTCondor** and cloud platforms like **Kubernetes, Amazon AWS, Google Cloud**.
+Nextflow can be executed on **multiple platforms** without modifying the code. It supports several schedulers such as **SGE, LSF, SLURM, PBS, and HTCondor** and cloud platforms like **Kubernetes, Amazon AWS, and Google Cloud**.
 
 
 .. image:: images/executors.png
@@ -71,8 +66,8 @@ Nextflow can be executed on **multiple platforms** without modifiying the code. 
 - **Scalability**
 
 Nextflow is based on the **dataflow programming model** which simplifies writing complex pipelines.
-The tool takes care of **parallelizing the processes** without additionally written code.
-The resulting applications are inherently parallel and can scale-up or scale-out transparently; there is no need to adapt them to a specific platform architecture.
+The tool takes care of **parallelizing the processes** without additional written code.
+The resulting applications are inherently parallel and can scale up or scale out transparently; there is no need to adapt them to a specific platform architecture.
 
 - **Resumable, thanks to continuous checkpoints**
 
@@ -83,25 +78,25 @@ Workflow structure
 -------------------
 
 The workflows can be represented as graphs where the nodes are the **processes** and the edges are the **channels**.
-The **processes** are blocks of code that can be executed - such as scripts or programs - while the **channels** are asynchronous queues able to **connect processes among them via input / output**.
+The **processes** are blocks of code that can be executed - such as scripts or programs - while the **channels** are asynchronous queues able to **connect processes among them via input/output**.
 
 
 .. image:: images/wf_example.png
   :width: 600
 
 
-Processes are independent from each another and can be run in parallel, depending on the number of elements in a channel.
-In the previous example, processes **A**, **B** and **C** can be run in parallel and only when they **ALL** end the process **D** is triggered. As you can see an operator is used for collecting or reshaping the output channels for generating a new one that is then consumed by the process **D**. 
+Processes are independent from each other and can be run in parallel, depending on the number of elements in a channel.
+In the previous example, processes **A**, **B**, and **C** can be run in parallel, and only when they **ALL** end the process **D** is triggered. As you can see an operator is used for collecting or reshaping the output channels for generating a new one that is then consumed by the process **D**. 
 
 Installation
 ------------
 
 .. note::
   Nextflow is already installed on the machines provided for this course.
-  You need at least the Java version 8 for the Nextflow installation.
+  You need at least Java version 8 for the Nextflow installation.
 
 .. tip::
-  You can check the version fo java by typing::
+  You can check the version for Java by typing::
 
     java -version
 
@@ -143,7 +138,7 @@ There are two different types of channels:
 - A **queue channel** is a non-blocking unidirectional `FIFO <https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)>`__ (First In, First Out) queue which **connects two processes or operators**.
 - A **value channel**, a.k.a. singleton channel, is bound to a single value and can be read unlimited times without consuming its content.
 
-An **operator** is a method that reshapes or connects different channels applying specific rules.
+An **operator** is a method that reshapes or connects different channels by applying specific rules.
 
 We can write a very simple Nextflow script: save the following piece of code in a file called ``ex1.nf``. All the examples are in the folder
 **/nextflow/examples/** while the scripts are in folders named **/nextflow/test**
@@ -209,7 +204,7 @@ Then we use `fromFilePairs <https://www.nextflow.io/docs/latest/channel.html#fro
 .. literalinclude:: ../nextflow/examples/ex3.nf
    :language: groovy
 
-Executing it will show the emission of a tuple which key is the common part of the two input files:
+Executing it will show the emission of a tuple whose key is the common part of the two input files:
 
 .. code-block:: console
 
@@ -219,7 +214,7 @@ Executing it will show the emission of a tuple which key is the common part of t
 	[aaa, [/nfs/users/bi/lcozzuto/aaa/CRG_Nextflow_Jun_2022/nextflow/examples/aaa_1.txt, /nfs/users/bi/lcozzuto/aaa/CRG_Nextflow_Jun_2022/nextflow/examples/aaa_2.txt]]
 
 
-We can reshape the channels in several ways and / or cross them using operators so that they can be used for a particular purpose. In brief, each "emission" of a channel can be used by a process for a specific purpose.  
+We can reshape the channels in several ways and/or cross them using operators so that they can be used for a particular purpose. In brief, each "emission" of a channel can be used by a process for a specific purpose.  
 
 
 Exercise
@@ -227,11 +222,11 @@ Exercise
 Using again the previous 3 `.txt` files ("aa.txt", "bb.txt", "cc.txt"), reshape the channels to emit:
 
   - A single channel with a **single emission** with all the files
-  - A channel with each possible file combination ( A vs A, A vs B, A vs C etc..)
+  - A channel with each possible file combination ( A vs A, A vs B, A vs C, etc..)
   - A tuple with a custom id, i.e. something like ["custom id", ["aa.txt", "bb.txt", "cc.txt"]]
 
 
-See here the list of `Operators <https://www.nextflow.io/docs/latest/operator.html#>`__ available at the official documentation.
+See here the list of `Operators <https://www.nextflow.io/docs/latest/operator.html#>`__ available in the official documentation.
 
 
 .. raw:: html
@@ -265,22 +260,22 @@ The process can be seen as a function that is composed of:
 
 - An **input** part where the input channels are defined.
 - An **output** part where we specify what to store as a result, that will be sent to other processes or published as final result.
-- A **script** part where we have the block of code to be executed using data from the input channel, and that will produce the output for the ouput channel.
+- A **script** part where we have the block of code to be executed using data from the input channel, and that will produce the output for the output channel.
 
-Any kind of code / command line can be run there, as it is **language agnostic**.
+Any kind of code/command line can be run there, as it is **language agnostic**.
 
 
 .. note::
-	You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file as a program.
+	You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file a program.
 
 .. tip::
-	Before the input, you can indicate a **tag** that will be reported in the log. This is quite useful for **logging / debugging**.
+	Before the input, you can indicate a **tag** that will be reported in the log. This is quite useful for **logging/debugging**.
 
 
 Workflow
 ------------
 
-The code above will produce nothing (actually a warning), because it requires the part that will actually **call the process** and connect it to the input channel.
+The code above will produce nothing (actually a warning) because it requires the part that will actually **call the process** and connect it to the input channel.
 
 .. code-block:: console
 
@@ -334,7 +329,7 @@ Let's inspect the log file:
 	bonjour in Italian is ciao
 
 
-The **tag** allows us to see that the process **printHello** was launched three times using the *hola*, *hello* and *bonjour* values contained in the input channel.
+The **tag** allows us to see that the process **printHello** was launched three times using the *hola*, *hello*, and *bonjour* values contained in the input channel.
 
 
 At the start of each row, there is an **alphanumeric code**:
@@ -374,13 +369,13 @@ Let's have a look inside that folder:
 
 You see a lot of "hidden" files:
 
-- **.exitcode**, contains 0 if everything is ok, another value if there was a problem.
+- **.exitcode**, contains 0 if everything is ok, and another value if there was a problem.
 - **.command.log**, contains the log of the command execution. It is often identical to `.command.out`
 - **.command.out**, contains the standard output of the command execution
 - **.command.err**, contains the standard error of the command execution
 - **.command.begin**, contains what has to be executed before `.command.sh`
 - **.command.sh**, contains the block of code indicated in the process
-- **.command.run**, contains the code made by nextflow for the execution of `.command.sh`, and contains environmental variables, eventual invocations of linux containers etc.
+- **.command.run**, contains the code made by Nextflow for the execution of `.command.sh`, and contains environmental variables, eventual invocations of Linux containers etc.
 
 For example, the content of `.command.sh` is:
 
@@ -401,7 +396,7 @@ And the content of `.command.out` is
 	hola in Italian is ciao
 
 
-You can also name the sub workflows to combine them in the main workflow. 
+You can also name the sub-workflows to combine them in the main workflow. 
 For example, using this code you can execute two different workflows that contain the same process. As you can see the named workflows work similarly to the process: the input is defined by the **take** keyword, while the **script** part is represented by the **main**. We also have an equivalent of **output** that is **emit** that will be described later on. The following script can be found in `test0_b.nf` file
 
 

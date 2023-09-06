@@ -105,25 +105,19 @@
 <section id="what-is-nextflow">
 <h3>What is Nextflow?<a class="headerlink" href="#what-is-nextflow" title="Link to this heading"></a></h3>
 <a class="reference internal image-reference" href="_images/nextf_groovy.png"><img alt="_images/nextf_groovy.png" src="_images/nextf_groovy.png" style="width: 600px;" /></a>
-<p><a class="reference external" href="https://www.nextflow.io">Nextflow</a> is a domain specific language (DSL) for workflow orchestration that stems from <a class="reference external" href="https://groovy-lang.org/">Groovy</a>. It enables scalable and reproducible workflows using software containers.
+<p><a class="reference external" href="https://www.nextflow.io">Nextflow</a> is a domain-specific language (DSL) for workflow orchestration that stems from <a class="reference external" href="https://groovy-lang.org/">Groovy</a>. It enables scalable and reproducible workflows using software containers.
 It was developed at the <a class="reference external" href="www.crg.eu">CRG</a> in the Lab of Cedric Notredame by <a class="reference external" href="https://github.com/pditommaso">Paolo Di Tommaso</a>.
-The Nextflow documentation is <a class="reference external" href="https://www.nextflow.io/docs/latest/">available here</a> and you can ask help to the community using their <a class="reference external" href="https://gitter.im/nextflow-io/nextflow">gitter channel</a> or joining their <a class="reference external" href="https://join.slack.com/t/nextflow/shared_invite/zt-11iwlxtw5-R6SNBpVksOJAx5sPOXNrZg">slack channel</a>.</p>
-<p>In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course we will use exclusively DSL2. It is currently developed and mantained by the company <a class="reference external" href="https://seqera.io/">Seqera Labs</a></p>
+The Nextflow documentation is <a class="reference external" href="https://www.nextflow.io/docs/latest/">available here</a> and you can ask help to the community joining their <a class="reference external" href="https://join.slack.com/t/nextflow/shared_invite/zt-11iwlxtw5-R6SNBpVksOJAx5sPOXNrZg">slack channel</a>.</p>
+<p>In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course, we will use exclusively DSL2. It is currently developed and maintained by the company <a class="reference external" href="https://seqera.io/">Seqera Labs</a> a spin-off from the CRG.</p>
 </section>
 <section id="what-is-nextflow-for">
 <h3>What is Nextflow for?<a class="headerlink" href="#what-is-nextflow-for" title="Link to this heading"></a></h3>
 <p>It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions, etc.</p>
 <p>It was published in <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/28398311/">Nature Biotechnology in 2017</a>.</p>
 <a class="reference internal image-reference" href="_images/NF_pub.png"><img alt="_images/NF_pub.png" src="_images/NF_pub.png" style="width: 600px;" /></a>
-<p>Searching Nextflow in Google scholar gives you currently 8,940 results.</p>
+<p>Searching for Nextflow in Google Scholar gives you currently 10,700 results.</p>
 <p>A curated list of <a class="reference external" href="https://github.com/nextflow-io/awesome-nextflow">Nextflow pipelines</a>.</p>
 <p>Many pipelines written collaboratively are provided by the <a class="reference external" href="https://nf-co.re/pipelines">NF-core</a> project.</p>
-<p>Some pipelines written in Nextflow have been used for the SARS-Cov-2 analysis too, for example:</p>
-<ul class="simple">
-<li><p>The <a class="reference external" href="https://artic.network/ncov-2019">artic Network</a> pipeline <a class="reference external" href="https://github.com/connor-lab/ncov2019-artic-nf">ncov2019-artic-nf</a>.</p></li>
-<li><p>The <a class="reference external" href="https://covid19beacon.crg.eu/info">CRG / EGA viral Beacon</a> pipeline <a class="reference external" href="https://github.com/biocorecrg/master_of_pores">Master of Pores</a>.</p></li>
-<li><p>The nf-core pipeline <a class="reference external" href="https://nf-co.re/viralrecon">viralrecon</a>.</p></li>
-</ul>
 </section>
 <section id="main-advantages">
 <h3>Main advantages<a class="headerlink" href="#main-advantages" title="Link to this heading"></a></h3>
@@ -131,22 +125,22 @@ The Nextflow documentation is <a class="reference external" href="https://www.ne
 <li><p><strong>Fast prototyping</strong></p></li>
 </ul>
 <p>You can quickly write a small pipeline that can be <strong>expanded incrementally</strong>.
-<strong>Each task is independent</strong> and can be easily added to other. You can reuse scripts without re-writing or adapting them.</p>
+<strong>Each task is independent</strong> and can be easily added to others. You can reuse scripts without re-writing or adapting them.</p>
 <ul class="simple">
 <li><p><strong>Reproducibility</strong></p></li>
 </ul>
-<p>Nextflow supports <strong>Docker</strong> and <strong>Singularity</strong> containers technology. Their use will make the pipelines reproducible in any Unix environment. Nextflow is integrated with <strong>GitHub code sharing platform</strong>, so you can call directly a specific version of a pipeline from a repository, download and use it on-the-fly.</p>
+<p>Nextflow supports many container technologies like Docker, Singularity / Apptainer, and Podman. Their use will make the pipelines reproducible in any Unix environment. Nextflow is integrated with <strong>GitHub code sharing platform</strong>, so you can call directly a specific version of a pipeline from a repository, download and use it on-the-fly.</p>
 <ul class="simple">
 <li><p><strong>Portability</strong></p></li>
 </ul>
-<p>Nextflow can be executed on <strong>multiple platforms</strong> without modifiying the code. It supports several schedulers such as <strong>SGE, LSF, SLURM, PBS, HTCondor</strong> and cloud platforms like <strong>Kubernetes, Amazon AWS, Google Cloud</strong>.</p>
+<p>Nextflow can be executed on <strong>multiple platforms</strong> without modifying the code. It supports several schedulers such as <strong>SGE, LSF, SLURM, PBS, and HTCondor</strong> and cloud platforms like <strong>Kubernetes, Amazon AWS, and Google Cloud</strong>.</p>
 <a class="reference internal image-reference" href="_images/executors.png"><img alt="_images/executors.png" src="_images/executors.png" style="width: 600px;" /></a>
 <ul class="simple">
 <li><p><strong>Scalability</strong></p></li>
 </ul>
 <p>Nextflow is based on the <strong>dataflow programming model</strong> which simplifies writing complex pipelines.
-The tool takes care of <strong>parallelizing the processes</strong> without additionally written code.
-The resulting applications are inherently parallel and can scale-up or scale-out transparently; there is no need to adapt them to a specific platform architecture.</p>
+The tool takes care of <strong>parallelizing the processes</strong> without additional written code.
+The resulting applications are inherently parallel and can scale up or scale out transparently; there is no need to adapt them to a specific platform architecture.</p>
 <ul class="simple">
 <li><p><strong>Resumable, thanks to continuous checkpoints</strong></p></li>
 </ul>
@@ -156,21 +150,21 @@ For each process <strong>a temporary folder is created and is cached (or not) on
 <section id="workflow-structure">
 <h3>Workflow structure<a class="headerlink" href="#workflow-structure" title="Link to this heading"></a></h3>
 <p>The workflows can be represented as graphs where the nodes are the <strong>processes</strong> and the edges are the <strong>channels</strong>.
-The <strong>processes</strong> are blocks of code that can be executed - such as scripts or programs - while the <strong>channels</strong> are asynchronous queues able to <strong>connect processes among them via input / output</strong>.</p>
+The <strong>processes</strong> are blocks of code that can be executed - such as scripts or programs - while the <strong>channels</strong> are asynchronous queues able to <strong>connect processes among them via input/output</strong>.</p>
 <a class="reference internal image-reference" href="_images/wf_example.png"><img alt="_images/wf_example.png" src="_images/wf_example.png" style="width: 600px;" /></a>
-<p>Processes are independent from each another and can be run in parallel, depending on the number of elements in a channel.
-In the previous example, processes <strong>A</strong>, <strong>B</strong> and <strong>C</strong> can be run in parallel and only when they <strong>ALL</strong> end the process <strong>D</strong> is triggered. As you can see an operator is used for collecting or reshaping the output channels for generating a new one that is then consumed by the process <strong>D</strong>.</p>
+<p>Processes are independent from each other and can be run in parallel, depending on the number of elements in a channel.
+In the previous example, processes <strong>A</strong>, <strong>B</strong>, and <strong>C</strong> can be run in parallel, and only when they <strong>ALL</strong> end the process <strong>D</strong> is triggered. As you can see an operator is used for collecting or reshaping the output channels for generating a new one that is then consumed by the process <strong>D</strong>.</p>
 </section>
 <section id="installation">
 <h3>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Nextflow is already installed on the machines provided for this course.
-You need at least the Java version 8 for the Nextflow installation.</p>
+You need at least Java version 8 for the Nextflow installation.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>You can check the version fo java by typing:</p>
+<p>You can check the version for Java by typing:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">java</span> <span class="o">-</span><span class="n">version</span>
 </pre></div>
 </div>
@@ -207,7 +201,7 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 <li><p>A <strong>queue channel</strong> is a non-blocking unidirectional <a class="reference external" href="https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)">FIFO</a> (First In, First Out) queue which <strong>connects two processes or operators</strong>.</p></li>
 <li><p>A <strong>value channel</strong>, a.k.a. singleton channel, is bound to a single value and can be read unlimited times without consuming its content.</p></li>
 </ul>
-<p>An <strong>operator</strong> is a method that reshapes or connects different channels applying specific rules.</p>
+<p>An <strong>operator</strong> is a method that reshapes or connects different channels by applying specific rules.</p>
 <p>We can write a very simple Nextflow script: save the following piece of code in a file called <code class="docutils literal notranslate"><span class="pre">ex1.nf</span></code>. All the examples are in the folder
 <strong>/nextflow/examples/</strong> while the scripts are in folders named <strong>/nextflow/test</strong></p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
@@ -303,14 +297,14 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 <span class="n">my_files</span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
 </pre></div>
 </div>
-<p>Executing it will show the emission of a tuple which key is the common part of the two input files:</p>
+<p>Executing it will show the emission of a tuple whose key is the common part of the two input files:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run ex3.nf</span>
 <span class="go">N E X T F L O W  ~  version 21.10.6</span>
 <span class="go">Launching `ex3.nf` [reverent_ampere] - revision: 87d78a151f</span>
 <span class="go">[aaa, [/nfs/users/bi/lcozzuto/aaa/CRG_Nextflow_Jun_2022/nextflow/examples/aaa_1.txt, /nfs/users/bi/lcozzuto/aaa/CRG_Nextflow_Jun_2022/nextflow/examples/aaa_2.txt]]</span>
 </pre></div>
 </div>
-<p>We can reshape the channels in several ways and / or cross them using operators so that they can be used for a particular purpose. In brief, each “emission” of a channel can be used by a process for a specific purpose.</p>
+<p>We can reshape the channels in several ways and/or cross them using operators so that they can be used for a particular purpose. In brief, each “emission” of a channel can be used by a process for a specific purpose.</p>
 </section>
 <section id="exercise">
 <h3>Exercise<a class="headerlink" href="#exercise" title="Link to this heading"></a></h3>
@@ -318,11 +312,11 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>A single channel with a <strong>single emission</strong> with all the files</p></li>
-<li><p>A channel with each possible file combination ( A vs A, A vs B, A vs C etc..)</p></li>
+<li><p>A channel with each possible file combination ( A vs A, A vs B, A vs C, etc..)</p></li>
 <li><p>A tuple with a custom id, i.e. something like [“custom id”, [“aa.txt”, “bb.txt”, “cc.txt”]]</p></li>
 </ul>
 </div></blockquote>
-<p>See here the list of <a class="reference external" href="https://www.nextflow.io/docs/latest/operator.html#">Operators</a> available at the official documentation.</p>
+<p>See here the list of <a class="reference external" href="https://www.nextflow.io/docs/latest/operator.html#">Operators</a> available in the official documentation.</p>
 <details>
 <summary><a>Solution</a></summary><div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
@@ -389,21 +383,21 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 <ul class="simple">
 <li><p>An <strong>input</strong> part where the input channels are defined.</p></li>
 <li><p>An <strong>output</strong> part where we specify what to store as a result, that will be sent to other processes or published as final result.</p></li>
-<li><p>A <strong>script</strong> part where we have the block of code to be executed using data from the input channel, and that will produce the output for the ouput channel.</p></li>
+<li><p>A <strong>script</strong> part where we have the block of code to be executed using data from the input channel, and that will produce the output for the output channel.</p></li>
 </ul>
-<p>Any kind of code / command line can be run there, as it is <strong>language agnostic</strong>.</p>
+<p>Any kind of code/command line can be run there, as it is <strong>language agnostic</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file as a program.</p>
+<p>You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file a program.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Before the input, you can indicate a <strong>tag</strong> that will be reported in the log. This is quite useful for <strong>logging / debugging</strong>.</p>
+<p>Before the input, you can indicate a <strong>tag</strong> that will be reported in the log. This is quite useful for <strong>logging/debugging</strong>.</p>
 </div>
 </section>
 <section id="workflow">
 <h3>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h3>
-<p>The code above will produce nothing (actually a warning), because it requires the part that will actually <strong>call the process</strong> and connect it to the input channel.</p>
+<p>The code above will produce nothing (actually a warning) because it requires the part that will actually <strong>call the process</strong> and connect it to the input channel.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run ex1_a.nf -dsl2</span>
 <span class="go">N E X T F L O W  ~  version 22.04.3</span>
 <span class="go">Launching `ex1_a.nf` [irreverent_leakey] DSL2 - revision: 224d75e0c7</span>
@@ -492,7 +486,7 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 <span class="go">bonjour in Italian is ciao</span>
 </pre></div>
 </div>
-<p>The <strong>tag</strong> allows us to see that the process <strong>printHello</strong> was launched three times using the <em>hola</em>, <em>hello</em> and <em>bonjour</em> values contained in the input channel.</p>
+<p>The <strong>tag</strong> allows us to see that the process <strong>printHello</strong> was launched three times using the <em>hola</em>, <em>hello</em>, and <em>bonjour</em> values contained in the input channel.</p>
 <p>At the start of each row, there is an <strong>alphanumeric code</strong>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">**[6a/2dfcaf]** Submitted process &gt; printHello (hola)</span>
 </pre></div>
@@ -525,13 +519,13 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 </div>
 <p>You see a lot of “hidden” files:</p>
 <ul class="simple">
-<li><p><strong>.exitcode</strong>, contains 0 if everything is ok, another value if there was a problem.</p></li>
+<li><p><strong>.exitcode</strong>, contains 0 if everything is ok, and another value if there was a problem.</p></li>
 <li><p><strong>.command.log</strong>, contains the log of the command execution. It is often identical to <cite>.command.out</cite></p></li>
 <li><p><strong>.command.out</strong>, contains the standard output of the command execution</p></li>
 <li><p><strong>.command.err</strong>, contains the standard error of the command execution</p></li>
 <li><p><strong>.command.begin</strong>, contains what has to be executed before <cite>.command.sh</cite></p></li>
 <li><p><strong>.command.sh</strong>, contains the block of code indicated in the process</p></li>
-<li><p><strong>.command.run</strong>, contains the code made by nextflow for the execution of <cite>.command.sh</cite>, and contains environmental variables, eventual invocations of linux containers etc.</p></li>
+<li><p><strong>.command.run</strong>, contains the code made by Nextflow for the execution of <cite>.command.sh</cite>, and contains environmental variables, eventual invocations of Linux containers etc.</p></li>
 </ul>
 <p>For example, the content of <cite>.command.sh</cite> is:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cat work/6a/2dfcaf*/.command.sh</span>
@@ -546,7 +540,7 @@ You need at least the Java version 8 for the Nextflow installation.</p>
 <span class="go">hola in Italian is ciao</span>
 </pre></div>
 </div>
-<p>You can also name the sub workflows to combine them in the main workflow.
+<p>You can also name the sub-workflows to combine them in the main workflow.
 For example, using this code you can execute two different workflows that contain the same process. As you can see the named workflows work similarly to the process: the input is defined by the <strong>take</strong> keyword, while the <strong>script</strong> part is represented by the <strong>main</strong>. We also have an equivalent of <strong>output</strong> that is <strong>emit</strong> that will be described later on. The following script can be found in <cite>test0_b.nf</cite> file</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
