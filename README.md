@@ -58,7 +58,7 @@ Knowing concepts about Linux containers is recommended.
 * 11:00-11:30 Coffee break
 * 11:30-13:30 Making simple scripts: channels operators and workflows
 
-### Day 1: Write, modify and run a complex pipeline
+### Day 1: Write, modify, and run a complex pipeline
 
 * 14:30-15:30 More complex scripts: Directive and resuming
 * 15:30-16:00 Coffee break
@@ -68,18 +68,18 @@ Knowing concepts about Linux containers is recommended.
 
 * 09:30-11:00 - Linux containers and Docker
 * 11:00-11.30 - Coffee break
-* 11:30-13.30 - Singularity/Apptainer
+* 11:30-13.00 - Singularity/Apptainer
 
 ### Day 3: Run a Nextflow pipeline in different environments
 
 * 09:30-11:00 Singularity and more processes
 * 11:00-11:30 Coffee break
-* 11:30-13:30 Profiles and cloud
+* 11:30-13:00 Profiles and cloud
 
 ### Day 4: Nextflow modules and Tower
 * 09:30-11:00 Modules
 * 11:00-11:30 Coffee break
-* 11:30-13:30 Tower
+* 11:30-13:00 Tower
 
 
 ## Acknowledgements
