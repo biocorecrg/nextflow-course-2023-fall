@@ -448,7 +448,7 @@
 <section id="volumes">
 <h3>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h3>
 <p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
-<p>Syntax: <strong>–volume/-v</strong> <em>host:container</em></p>
+<p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir data</span>
 <span class="go">touch data/test</span>
 <span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>copy<span class="w"> </span>the<span class="w"> </span>FASTQ<span class="w"> </span>we<span class="w"> </span>used<span class="w"> </span><span class="k">in</span><span class="w"> </span>previous<span class="w"> </span>exercises...<span class="w"> </span>cp<span class="w"> </span>...
@@ -537,7 +537,7 @@ It is an important option in the context of Docker: it means that you <em>answer
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker build --file Dockerfile .</span>
 </pre></div>
 </div>
-<p>Syntax: <strong>–file / -f</strong></p>
+<p>Syntax: <strong>--file / -f</strong></p>
 <p><strong>.</strong> stands for the context (in this case, current directory) of the build process. This makes sense if copying files from filesystem, for instance. <strong>IMPORTANT</strong>: Avoid contexts (directories) overpopulated with files (even if not actually used in the recipe).</p>
 <p>You can define a specific name for the image during the build process.</p>
 <p>Syntax: <strong>-t</strong> <em>imagename:tag</em>. If not defined <code class="docutils literal notranslate"><span class="pre">`:tag`</span></code> default is latest.</p>
