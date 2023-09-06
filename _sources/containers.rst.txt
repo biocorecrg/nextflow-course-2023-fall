@@ -559,29 +559,6 @@ Difference between ADD and COPY explained `here <https://stackoverflow.com/quest
 
 **ADD**: same, but ADD works also for URLs, and for .tar archives that will be automatically extracted upon being copied.
 
-If we have a file, let's say ```example.jpg```, we can copy it.
-
-.. code-block::
-
-  # COPY source destination
-  COPY example.jpg .
-
-A more sophisticated case:
-
-.. code-block::
-
-  FROM ubuntu:22.04
-
-  RUN apt update && apt -y upgrade
-  RUN apt install -y wget
-
-  RUN mkdir -p /data
-
-  WORKDIR /data
-
-  COPY example.jpg .
-
-
 **ENV, ARG**: run and build environment variables
 
 Difference between ARG and ENV explained `here <https://vsupalov.com/docker-arg-vs-env/>`__.
@@ -589,44 +566,6 @@ Difference between ARG and ENV explained `here <https://vsupalov.com/docker-arg-
 * **ARG** values: available only while the image is built.
 * **ENV** values: available during the image build process but also for the future running containers.
   * It can be checked in a resulting running container by running ``env``.
-
-In the case below **UbuntuVersion** argument is provided with a default value.
-
-.. code-block::
-
-  ARG UbuntuVersion=22.04
-
-  FROM ubuntu:${UbuntuVersion}
-
-
-Override the value for **UbuntuVersion** as you build the image with --build-arg:
-
-.. code-block::
-
-  docker build --build-arg UbuntuVersion=20.04 .
-
-
-We try a simple example with ENV
-
-.. code-block::
-
-  FROM ubuntu:22.04
-
-  ENV PLANET="Earth"
-
-  RUN echo ${PLANET}
-
-Enter in the container interactively and check variable ``${PLANET}``
-
-You can pass variable through commandline as well (with ``--env``/``-e``) during running process:
-
-.. code-block:: console
-
-  docker run -ti --env PLANET=Mars test
-
-
-Try to replace the examples above of **ENV** with **ARG** and see what happens.
-
 
 **CMD, ENTRYPOINT**: command to execute when generated container starts
 
@@ -657,7 +596,6 @@ A more complex recipe (save it in a text file named **Dockerfile**:
 
   ENTRYPOINT ["/usr/bin/wget"]
   CMD ["https://cdn.wp.nginx.com/wp-content/uploads/2016/07/docker-swarm-hero2.png"]
-
 
 
 .. code-block:: console
