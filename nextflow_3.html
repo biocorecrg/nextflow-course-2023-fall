@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Decoupling resources, parameters and Nextflow script &mdash; Nextflow Course 2023 Fall  documentation</title>
+  <title>Nextflow 3 &mdash; Nextflow Course 2023 Fall  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://biocorecrg.github.io/nextflow-course-2023-fall/nextflow_3.html" />
@@ -49,12 +49,15 @@
 <li class="toctree-l1"><a class="reference internal" href="nextflow_1.html">Nextflow 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_2.html">Nextflow 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="containers.html">Containers</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Decoupling resources, parameters and Nextflow script</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#publishing-final-results">Publishing final results</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Nextflow 3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#decoupling-resources-parameters-and-nextflow-script">Decoupling resources, parameters and Nextflow script</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishing-final-results">Publishing final results</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#adding-help-section-to-a-pipeline">Adding help section to a pipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#exercise">EXERCISE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-help-section-to-a-pipeline">Adding help section to a pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercise">EXERCISE</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_4.html">Nextflow 4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nextflow_5.html">Nextflow 5</a></li>
 </ul>
@@ -73,7 +76,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Decoupling resources, parameters and Nextflow script</li>
+      <li class="breadcrumb-item active">Nextflow 3</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/nextflow_3.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -83,8 +86,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="decoupling-resources-parameters-and-nextflow-script">
-<h1>Decoupling resources, parameters and Nextflow script<a class="headerlink" href="#decoupling-resources-parameters-and-nextflow-script" title="Link to this heading"></a></h1>
+  <section id="nextflow-3">
+<span id="nextflow-3-page"></span><h1>Nextflow 3<a class="headerlink" href="#nextflow-3" title="Link to this heading"></a></h1>
+<section id="decoupling-resources-parameters-and-nextflow-script">
+<h2>Decoupling resources, parameters and Nextflow script<a class="headerlink" href="#decoupling-resources-parameters-and-nextflow-script" title="Link to this heading"></a></h2>
 <p>When making complex pipelines it is convenient to keep the definition of resources needed, the default parameters, and the main script separately from each other.
 This can be achieved using two additional files:</p>
 <ul class="simple">
@@ -337,7 +342,7 @@ In case of using a singularity container, you can indicate where to store the lo
 </div>
 <p>This will tell Nextflow that if it is run with Docker, it has to produce files that belong to a user rather than the root.</p>
 <section id="publishing-final-results">
-<h2>Publishing final results<a class="headerlink" href="#publishing-final-results" title="Link to this heading"></a></h2>
+<h3>Publishing final results<a class="headerlink" href="#publishing-final-results" title="Link to this heading"></a></h3>
 <p>The script <strong>test2.nf</strong> generates two new folders, <strong>output_fastqc</strong> and <strong>output_multiQC</strong>, that contain the result of the pipeline output.
 We can indicate which process and output can be considered the final output of the pipeline using the <strong>publishDir</strong> directive that has to be specified at the beginning of a process.</p>
 <p>In our pipeline, we define these folders here:</p>
@@ -477,7 +482,7 @@ We can indicate which process and output can be considered the final output of t
 </section>
 </section>
 <section id="adding-help-section-to-a-pipeline">
-<h1>Adding help section to a pipeline<a class="headerlink" href="#adding-help-section-to-a-pipeline" title="Link to this heading"></a></h1>
+<h2>Adding help section to a pipeline<a class="headerlink" href="#adding-help-section-to-a-pipeline" title="Link to this heading"></a></h2>
 <p>Here we describe another good practice: the use of the <cite>--help</cite> parameter. At the beginning of the pipeline, we can write:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
@@ -601,7 +606,7 @@ We can indicate which process and output can be considered the final output of t
 </div>
 </section>
 <section id="exercise">
-<h1>EXERCISE<a class="headerlink" href="#exercise" title="Link to this heading"></a></h1>
+<h2>EXERCISE<a class="headerlink" href="#exercise" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Look at the very last EXERCISE of the day before. Change the script and the config file using the label for handling failing processes.</p></li>
 </ul>
@@ -832,6 +837,7 @@ We can indicate which process and output can be considered the final output of t
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
+</section>
 </section>
 
 
