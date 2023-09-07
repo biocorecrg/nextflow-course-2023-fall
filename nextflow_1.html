@@ -108,16 +108,15 @@
 <p><a class="reference external" href="https://www.nextflow.io">Nextflow</a> is a domain-specific language (DSL) for workflow orchestration that stems from <a class="reference external" href="https://groovy-lang.org/">Groovy</a>. It enables scalable and reproducible workflows using software containers.
 It was developed at the <a class="reference external" href="www.crg.eu">CRG</a> in the Lab of Cedric Notredame by <a class="reference external" href="https://github.com/pditommaso">Paolo Di Tommaso</a>.
 The Nextflow documentation is <a class="reference external" href="https://www.nextflow.io/docs/latest/">available here</a> and you can ask help to the community joining their <a class="reference external" href="https://join.slack.com/t/nextflow/shared_invite/zt-11iwlxtw5-R6SNBpVksOJAx5sPOXNrZg">slack channel</a>.</p>
-<p>In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course, we will use exclusively DSL2. It is currently developed and maintained by the company <a class="reference external" href="https://seqera.io/">Seqera Labs</a> a spin-off from the CRG.</p>
+<p>In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course, we will use exclusively DSL2. It is currently developed and maintained by the company <a class="reference external" href="https://seqera.io/">Seqera Labs</a> a spin-off from the CRG. Each year there is a special event about Nextflow called <a class="reference external" href="https://summit.nextflow.io/">Nextflow summit</a>.</p>
 </section>
 <section id="what-is-nextflow-for">
 <h3>What is Nextflow for?<a class="headerlink" href="#what-is-nextflow-for" title="Link to this heading"></a></h3>
 <p>It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions, etc.</p>
 <p>It was published in <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/28398311/">Nature Biotechnology in 2017</a>.</p>
 <a class="reference internal image-reference" href="_images/NF_pub.png"><img alt="_images/NF_pub.png" src="_images/NF_pub.png" style="width: 600px;" /></a>
-<p>Searching for Nextflow in Google Scholar gives you currently 10,700 results.</p>
-<p>A curated list of <a class="reference external" href="https://github.com/nextflow-io/awesome-nextflow">Nextflow pipelines</a>.</p>
-<p>Many pipelines written collaboratively are provided by the <a class="reference external" href="https://nf-co.re/pipelines">NF-core</a> project.</p>
+<p>A search for Nextflow in Google Scholar gives you 10,700 results. Many research groups from both public research centers and companies have adopted this framework for writing their pipelines and methods.</p>
+<p>Here you have a curated list of <a class="reference external" href="https://github.com/nextflow-io/awesome-nextflow">Nextflow pipelines</a>. A community of researchers decided to go further and to build on top of Nextflow a framework for standardizing the pipelines . This ended up in a project called <a class="reference external" href="https://nf-co.re/pipelines">NF-core</a> that currently host 86 pipelines.</p>
 </section>
 <section id="main-advantages">
 <h3>Main advantages<a class="headerlink" href="#main-advantages" title="Link to this heading"></a></h3>
@@ -142,6 +141,10 @@ The Nextflow documentation is <a class="reference external" href="https://www.ne
 The tool takes care of <strong>parallelizing the processes</strong> without additional written code.
 The resulting applications are inherently parallel and can scale up or scale out transparently; there is no need to adapt them to a specific platform architecture.</p>
 <ul class="simple">
+<li><p><a href="#id1"><span class="problematic" id="id2">**</span></a>Facilitate the sharing and collaboration **</p></li>
+</ul>
+<p>Nextflow integrates the main code repositories such as BitBucket, GitHub, and GitLab. Since each module / sub-workflow is independent it makes it easier to code in parallel reducing the bottlenecks.</p>
+<ul class="simple">
 <li><p><strong>Resumable, thanks to continuous checkpoints</strong></p></li>
 </ul>
 <p>All the intermediate results produced during the pipeline execution are automatically tracked.
@@ -152,7 +155,7 @@ For each process <strong>a temporary folder is created and is cached (or not) on
 <p>The workflows can be represented as graphs where the nodes are the <strong>processes</strong> and the edges are the <strong>channels</strong>.
 The <strong>processes</strong> are blocks of code that can be executed - such as scripts or programs - while the <strong>channels</strong> are asynchronous queues able to <strong>connect processes among them via input/output</strong>.</p>
 <a class="reference internal image-reference" href="_images/wf_example.png"><img alt="_images/wf_example.png" src="_images/wf_example.png" style="width: 600px;" /></a>
-<p>Processes are independent from each other and can be run in parallel, depending on the number of elements in a channel.
+<p>Processes are independent of each other and can be run in parallel, depending on the number of elements in a channel.
 In the previous example, processes <strong>A</strong>, <strong>B</strong>, and <strong>C</strong> can be run in parallel, and only when they <strong>ALL</strong> end the process <strong>D</strong> is triggered. As you can see an operator is used for collecting or reshaping the output channels for generating a new one that is then consumed by the process <strong>D</strong>.</p>
 </section>
 <section id="installation">
@@ -275,7 +278,7 @@ You need at least Java version 8 for the Nextflow installation.</p>
 </pre></div>
 </div>
 <p>Once executed, we can see that a folder named <strong>work</strong> is generated. Nextflow stores in this folder the intermediate files generated by the processes.</p>
-<p>In genomics we often have couple of files that have to be processed at the same times, such as the paired end reads etc. For this Nextflow allow using a special method for generating “tuples” from file pairs.</p>
+<p>In genomics, we often have a couple of files that have to be processed at the same time, such as the paired end reads, etc. For this Nextflow allows using a special method for generating “tuples” from file pairs.</p>
 <p>We can simulate this situation by generating a couple of files:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">touch aaa_1.txt aaa_2.txt</span>
 </pre></div>
