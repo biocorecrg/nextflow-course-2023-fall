@@ -78,23 +78,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#volumes">Volumes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#docker-recipes-build-your-own-images">Docker recipes: build your own images</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#os-commands-in-image-building">OS commands in image building</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#update-and-upgrade-packages">Update and upgrade packages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#search-and-install-packages">Search and install packages</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#building-recipes">Building recipes</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#basic-instructions">Basic instructions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#docker-build">docker build</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#more-instructions">More instructions</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-tag">docker tag</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#build-exercise">Build exercise</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#additional-commands">Additional commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#singularity">Singularity</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-architecture">Singularity architecture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#container-registries">Container registries</a><ul>
@@ -149,7 +132,7 @@
 <h2>Linux containers<a class="headerlink" href="#linux-containers" title="Link to this heading"></a></h2>
 <section id="what-are-containers">
 <h3>What are containers?<a class="headerlink" href="#what-are-containers" title="Link to this heading"></a></h3>
-<a class="reference internal image-reference" href="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2022.04/containers-rsa.jpg"><img alt="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2022.04/containers-rsa.jpg" src="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2022.04/containers-rsa.jpg" style="width: 700px;" /></a>
+<a class="reference internal image-reference" href="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg"><img alt="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg" src="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg" style="width: 700px;" /></a>
 <p>A Container can be seen as a <strong>minimal virtual environment</strong> that can be used in any Linux-compatible machine (and beyond).</p>
 <p>Using containers is time- and resource-saving as they allow:</p>
 <ul class="simple">
@@ -230,6 +213,7 @@
 </section>
 <section id="docker">
 <h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png"><img alt="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png" src="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png" style="width: 400px;" /></a>
 <section id="what-is-docker">
 <h3>What is Docker?<a class="headerlink" href="#what-is-docker" title="Link to this heading"></a></h3>
 <ul class="simple">
@@ -301,7 +285,7 @@
 <li><p>choose the version of Ubuntu you are fetching: check the different tags</p></li>
 </ul>
 <a class="reference internal image-reference" href="_images/dockerhub_ubuntu_1804.png"><img alt="_images/dockerhub_ubuntu_1804.png" src="_images/dockerhub_ubuntu_1804.png" style="width: 850px;" /></a>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:22.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:18.04</span>
 </pre></div>
 </div>
 </section>
@@ -334,30 +318,30 @@
 <p><strong>docker run</strong> creates a fresh container (active instance of the image) from a <strong>Docker (static) image</strong>, and runs it.</p>
 <p>The format is:</p>
 <p>docker run image:tag <strong>command</strong></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:22.04 /bin/ls</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:18.04 /bin/ls</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/docker_run_ls.png"><img alt="_images/docker_run_ls.png" src="_images/docker_run_ls.png" style="width: 200px;" /></a>
 <p>Now execute <strong>ls</strong> in your current working directory: is the result the same?</p>
 <p>You can execute any program/command that is stored inside the image:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:22.04 /bin/whoami</span>
-<span class="go">docker run ubuntu:22.04 cat /etc/issue</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:18.04 /bin/whoami</span>
+<span class="go">docker run ubuntu:18.04 cat /etc/issue</span>
 </pre></div>
 </div>
 <p>You can either execute programs in the image from the command line (see above) or <strong>execute a container interactively</strong>, i.e. <strong>“enter”</strong> the container.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:22.04 /bin/bash</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:18.04 /bin/bash</span>
 </pre></div>
 </div>
 <p>Run container as daemon (in background)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach ubuntu:22.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach ubuntu:18.04</span>
 
-<span class="go">docker run --detach ubuntu:22.04 tail -f /dev/null</span>
+<span class="go">docker run --detach ubuntu:18.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 <p>Run container as daemon (in background) with a given name</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach --name myubuntu ubuntu:22.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach --name myubuntu ubuntu:18.04</span>
 
-<span class="go">docker run --detach --name myubuntu ubuntu:22.04 tail -f /dev/null</span>
+<span class="go">docker run --detach --name myubuntu ubuntu:18.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 </section>
@@ -406,7 +390,7 @@
 </pre></div>
 </div>
 <p>Run with restart enabled</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:22.04 tail -f /dev/null</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:18.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -423,7 +407,7 @@
 <span class="go">docker rm -f myubuntu</span>
 </pre></div>
 </div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:22.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:18.04</span>
 </pre></div>
 </div>
 <section id="major-clean">
@@ -448,7 +432,7 @@
 <section id="volumes">
 <h3>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h3>
 <p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
-<p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
+<p>Syntax: <strong>–volume/-v</strong> <em>host:container</em></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir data</span>
 <span class="go">touch data/test</span>
 <span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>copy<span class="w"> </span>the<span class="w"> </span>FASTQ<span class="w"> </span>we<span class="w"> </span>used<span class="w"> </span><span class="k">in</span><span class="w"> </span>previous<span class="w"> </span>exercises...<span class="w"> </span>cp<span class="w"> </span>...
@@ -461,214 +445,6 @@
 </pre></div>
 </div>
 </section>
-</section>
-<section id="docker-recipes-build-your-own-images">
-<h2>Docker recipes: build your own images<a class="headerlink" href="#docker-recipes-build-your-own-images" title="Link to this heading"></a></h2>
-<section id="os-commands-in-image-building">
-<h3>OS commands in image building<a class="headerlink" href="#os-commands-in-image-building" title="Link to this heading"></a></h3>
-<p>Depending on the underlying OS, there are different ways to build images.</p>
-<p>Know your base system and their packages. Popular ones:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://packages.debian.org">Debian</a></p></li>
-<li><p><a class="reference external" href="https://centos.pkgs.org/">CentOS</a></p></li>
-<li><p><a class="reference external" href="https://pkgs.alpinelinux.org/packages">Alpine</a></p></li>
-<li><p>Conda. <a class="reference external" href="https://anaconda.org/anaconda/repo">Anaconda</a>, <a class="reference external" href="https://conda-forge.org/feedstocks/">Conda-forge</a>, <a class="reference external" href="https://anaconda.org/bioconda/repo">Bioconda</a>, etc.</p></li>
-</ul>
-<section id="update-and-upgrade-packages">
-<h4>Update and upgrade packages<a class="headerlink" href="#update-and-upgrade-packages" title="Link to this heading"></a></h4>
-<ul class="simple">
-<li><p>In <strong>Ubuntu</strong>:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span> <span class="o">-</span><span class="n">y</span>
-</pre></div>
-</div>
-<p>In <strong>CentOS</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">check</span><span class="o">-</span><span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">yum</span> <span class="n">update</span> <span class="o">-</span><span class="n">y</span>
-</pre></div>
-</div>
-</section>
-<section id="search-and-install-packages">
-<h4>Search and install packages<a class="headerlink" href="#search-and-install-packages" title="Link to this heading"></a></h4>
-<ul class="simple">
-<li><p>In <strong>Ubuntu</strong>:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">search</span> <span class="n">libxml2</span>
-<span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">dev</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>In <strong>CentOS</strong>:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">search</span> <span class="n">libxml2</span>
-<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">devel</span><span class="o">.</span><span class="n">x86_64</span>
-</pre></div>
-</div>
-<p>Note the <strong>-y</strong> option that we set for updating and for installing.&lt;br&gt;
-It is an important option in the context of Docker: it means that you <em>answer yes to all questions</em> regarding installation.</p>
-</section>
-</section>
-<section id="building-recipes">
-<h3>Building recipes<a class="headerlink" href="#building-recipes" title="Link to this heading"></a></h3>
-<p>All commands should be saved in a text file, named by default <strong>Dockerfile</strong>.</p>
-<section id="basic-instructions">
-<h4>Basic instructions<a class="headerlink" href="#basic-instructions" title="Link to this heading"></a></h4>
-<p>Each row in the recipe corresponds to a <strong>layer</strong> of the final image.</p>
-<p><strong>FROM</strong>: parent image. Typically, an operating system. The <strong>base layer</strong>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span><span class="p">:</span><span class="mf">22.04</span>
-</pre></div>
-</div>
-<p><strong>RUN</strong>: the command to execute inside the image filesystem.</p>
-<p>Think about it this way: every <strong>RUN</strong> line is essentially what you would run to install programs on a freshly installed Ubuntu OS.</p>
-<p>A basic recipe:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span><span class="p">:</span><span class="mf">22.04</span>
-
-<span class="n">RUN</span> <span class="n">apt</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span> <span class="o">-</span><span class="n">y</span> <span class="n">upgrade</span>
-<span class="n">RUN</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">wget</span>
-</pre></div>
-</div>
-</section>
-<section id="docker-build">
-<h4>docker build<a class="headerlink" href="#docker-build" title="Link to this heading"></a></h4>
-<p>Implicitely looks for a <strong>Dockerfile</strong> file in the current directory:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker build .</span>
-</pre></div>
-</div>
-<p>Same as:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker build --file Dockerfile .</span>
-</pre></div>
-</div>
-<p>Syntax: <strong>--file / -f</strong></p>
-<p><strong>.</strong> stands for the context (in this case, current directory) of the build process. This makes sense if copying files from filesystem, for instance. <strong>IMPORTANT</strong>: Avoid contexts (directories) overpopulated with files (even if not actually used in the recipe).</p>
-<p>You can define a specific name for the image during the build process.</p>
-<p>Syntax: <strong>-t</strong> <em>imagename:tag</em>. If not defined <code class="docutils literal notranslate"><span class="pre">`:tag`</span></code> default is latest.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker build -t mytestimage .</span>
-<span class="gp"># </span>Same<span class="w"> </span>as:
-<span class="go">docker build -t mytestimage:latest .</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>IMPORTANT: Avoid contexts (directories) over-populated with files (even if not actually used in the recipe).</p></li>
-</ul>
-<p>In order to avoid that some directories or files are inspected or included (e.g, with COPY command in Dockerfile), you can use .dockerignore file to specify which paths should be avoided. More information at: <a class="reference external" href="https://codefresh.io/docker-tutorial/not-ignore-dockerignore-2/">https://codefresh.io/docker-tutorial/not-ignore-dockerignore-2/</a></p>
-<p>The last line of installation should be <strong>Successfully built …</strong>: then you are good to go.</p>
-<p>Check with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> that you see the newly built image in the list…</p>
-<p>Then let’s check the ID of the image and run it!</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker images</span>
-
-<span class="go">docker run f9f41698e2f8</span>
-<span class="go">docker run mytestimage</span>
-</pre></div>
-</div>
-</section>
-<section id="more-instructions">
-<h4>More instructions<a class="headerlink" href="#more-instructions" title="Link to this heading"></a></h4>
-<p><strong>WORKDIR</strong>: all subsequent actions will be executed in that working directory</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WORKDIR</span> <span class="o">~</span>
-</pre></div>
-</div>
-<p><strong>ADD, COPY</strong>: add files to the image filesystem</p>
-<p>Difference between ADD and COPY explained <a class="reference external" href="https://stackoverflow.com/questions/24958140/what-is-the-difference-between-the-copy-and-add-commands-in-a-dockerfile">here</a> and <a class="reference external" href="https://nickjanetakis.com/blog/docker-tip-2-the-difference-between-copy-and-add-in-a-dockerile">here</a></p>
-<p><strong>COPY</strong>: lets you copy a local file or directory from your host (the machine from which you are building the image)</p>
-<p><strong>ADD</strong>: same, but ADD works also for URLs, and for .tar archives that will be automatically extracted upon being copied.</p>
-<p><strong>ENV, ARG</strong>: run and build environment variables</p>
-<p>Difference between ARG and ENV explained <a class="reference external" href="https://vsupalov.com/docker-arg-vs-env/">here</a>.</p>
-<ul class="simple">
-<li><p><strong>ARG</strong> values: available only while the image is built.</p></li>
-<li><p><strong>ENV</strong> values: available during the image build process but also for the future running containers.
-* It can be checked in a resulting running container by running <code class="docutils literal notranslate"><span class="pre">env</span></code>.</p></li>
-</ul>
-<p><strong>CMD, ENTRYPOINT</strong>: command to execute when generated container starts</p>
-<p>The ENTRYPOINT specifies a command that will always be executed when the container starts. The CMD specifies arguments that will be fed to the ENTRYPOINT</p>
-<p>In the example below, when the container is run without an argument, it will execute <cite>echo “hello world”</cite>.
-If it is run with the argument <strong>hello moon</strong> it will execute <cite>echo “hello moon”</cite></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span><span class="p">:</span><span class="mf">22.04</span>
-<span class="n">ENTRYPOINT</span> <span class="p">[</span><span class="s2">&quot;/bin/echo&quot;</span><span class="p">]</span>
-<span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;hello world&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>A more complex recipe (save it in a text file named <strong>Dockerfile</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span><span class="p">:</span><span class="mf">22.04</span>
-
-<span class="n">WORKDIR</span> <span class="o">~</span>
-
-<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">upgrade</span>
-<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">wget</span>
-
-<span class="n">ENTRYPOINT</span> <span class="p">[</span><span class="s2">&quot;/usr/bin/wget&quot;</span><span class="p">]</span>
-<span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;https://cdn.wp.nginx.com/wp-content/uploads/2016/07/docker-swarm-hero2.png&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run f9f41698e2f8 https://cdn-images-1.medium.com/max/1600/1*_NQN6_YnxS29m8vFzWYlEg.png</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="docker-tag">
-<h3>docker tag<a class="headerlink" href="#docker-tag" title="Link to this heading"></a></h3>
-<p>To tag a local image with ID “e23aaea5dff1” into the “ubuntu_wget” image name repository with version “1.0”:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker tag e23aaea5dff1 ubuntu_wget:1.0</span>
-</pre></div>
-</div>
-</section>
-<section id="build-exercise">
-<h3>Build exercise<a class="headerlink" href="#build-exercise" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Random numbers</p></li>
-<li><p>Copy the following short bash script in a file called random_numbers.bash.</p></li>
-</ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span>!/usr/bin/bash
-<span class="go">seq 1 1000 | shuf | head -$1</span>
-</pre></div>
-</div>
-<p>This script outputs random intergers from 1 to 1000: the number of integers selected is given as the first argument.</p>
-<ul class="simple">
-<li><p>Write a recipe for an image:</p>
-<ul>
-<li><p>Based on centos:7</p></li>
-<li><p>That will execute this script (with bash) when it is run, giving it 2 as a default argument (i.e. outputs 2 random integers): the default can be changed as the image is run.</p></li>
-<li><p>Build the image.</p></li>
-<li><p>Start a container with the default argument, then try it with another argument.</p></li>
-</ul>
-</li>
-</ul>
-<details>
-<summary><a>Suggested solution</a></summary><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">centos</span><span class="p">:</span><span class="mi">7</span>
-
-<span class="c1"># Copy script from host to image</span>
-<span class="n">COPY</span> <span class="n">random_numbers</span><span class="o">.</span><span class="n">bash</span> <span class="o">.</span>
-
-<span class="c1"># Make script executable</span>
-<span class="n">RUN</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">random_numbers</span><span class="o">.</span><span class="n">bash</span>
-
-<span class="c1"># As the container starts, &quot;random_numbers.bash&quot; is run</span>
-<span class="n">ENTRYPOINT</span> <span class="p">[</span><span class="s2">&quot;/usr/bin/bash&quot;</span><span class="p">,</span> <span class="s2">&quot;random_numbers.bash&quot;</span><span class="p">]</span>
-
-<span class="c1"># default argument (that can be changed on the command line)</span>
-<span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;2&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Build and run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker build -f Dockerfile_RN -t random_numbers .</span>
-<span class="go">docker run random_numbers</span>
-<span class="go">docker run random_numbers 10</span>
-</pre></div>
-</div>
-</details></section>
-</section>
-<section id="additional-commands">
-<h2>Additional commands<a class="headerlink" href="#additional-commands" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>docker inspect</strong>: Get details from containers (both running and stopped). Things such as IPs, volumes, etc.</p></li>
-<li><p><strong>docker logs</strong>: Get <em>console</em> messages from running containers. Useful when using with web services.</p></li>
-<li><p><strong>docker commit</strong>: Turn a container into an image. It make senses to use when modifying container interactively. However this is bad for reproducibility if no steps are saved.</p></li>
-</ul>
-<p>Good for long-term reproducibility and for critical production environments:</p>
-<ul class="simple">
-<li><p><strong>docker save</strong>: Save an image into an image tar archive.</p></li>
-<li><p><strong>docker load</strong>: Load an image tar archive to become an image.</p></li>
-<li><p><strong>docker export</strong>: Save a container filesystem into a tar archive.</p></li>
-<li><p><strong>docker import</strong>: Import a filesystem tar archive into an image (you need to specify a target tag).</p></li>
-</ul>
 </section>
 <section id="singularity">
 <h2>Singularity<a class="headerlink" href="#singularity" title="Link to this heading"></a></h2>
