@@ -97,7 +97,7 @@ You can see an example of this code by looking at the script `test1_a.nf` where 
 
 Here instead the shell script in `bin/splitseq.sh`
 
-.. literalinclude:: ../nextflow/bin/splitseq.sh
+.. literalinclude:: ../nextflow/test1/bin/splitseq.sh
    :language: bash
 
 Named workflows
