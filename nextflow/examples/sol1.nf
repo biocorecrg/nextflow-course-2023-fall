@@ -16,8 +16,3 @@ my_files
     .combine(my_files)
     .view()
 
-my_files
-    .collect()
-    .map{
-		["custom id", it]
-}.view()
