@@ -261,6 +261,9 @@ This avoids clashes, and each process is isolated from the other.</p>
 </pre></div>
 </div>
 <p>Here instead the shell script in <cite>bin/splitseq.sh</cite></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>awk<span class="w"> </span><span class="s1">&#39;/^&gt;/ {f=&quot;seq_&quot;++d} {print &gt; f}&#39;</span><span class="w"> </span>&lt;<span class="w"> </span><span class="nv">$1</span>
+</pre></div>
+</div>
 </section>
 <section id="named-workflows">
 <h3>Named workflows<a class="headerlink" href="#named-workflows" title="Link to this heading"></a></h3>
