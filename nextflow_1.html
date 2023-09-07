@@ -311,6 +311,22 @@ You need at least Java version 8 for the Nextflow installation.</p>
 <p>A special very powerful operator is <strong>map</strong>, that allows you reshaping the data in several ways.
 It uses the <a class="reference external" href="https://www.nextflow.io/docs/latest/script.html#closures">Grovvy’s closure</a> for modifying the input channel. In brief, a closure is a piece of code between curly brackets <strong>{}</strong> that can be passed as an argument of a function. It uses as input the implicit variable <strong>it</strong>:</p>
 <p>Here you can see an example:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
+
+<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
+
+<span class="n">Channel</span>
+<span class="w">    </span><span class="o">.</span><span class="na">fromPath</span><span class="o">(</span><span class="s2">&quot;{aa,bb,cc}.txt&quot;</span><span class="o">)</span>
+<span class="w">    </span><span class="o">.</span><span class="na">set</span><span class="w"> </span><span class="o">{</span><span class="n">my_files</span><span class="o">}</span>
+
+
+<span class="n">my_files</span>
+<span class="w">    </span><span class="o">.</span><span class="na">collect</span><span class="o">()</span>
+<span class="w">    </span><span class="o">.</span><span class="na">map</span><span class="o">{</span>
+<span class="w">                </span><span class="o">[</span><span class="s2">&quot;my id&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">it</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span><span class="w"> </span><span class="n">it</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">]</span>
+<span class="o">}.</span><span class="na">view</span><span class="o">()</span>
+</pre></div>
+</div>
 <p>This will produce:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run map.nf</span>
 <span class="go">N E X T F L O W  ~  version 23.03.0-edge</span>
@@ -347,12 +363,6 @@ It uses the <a class="reference external" href="https://www.nextflow.io/docs/lat
 <span class="n">my_files</span>
 <span class="w">    </span><span class="o">.</span><span class="na">combine</span><span class="o">(</span><span class="n">my_files</span><span class="o">)</span>
 <span class="w">    </span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
-
-<span class="n">my_files</span>
-<span class="w">    </span><span class="o">.</span><span class="na">collect</span><span class="o">()</span>
-<span class="w">    </span><span class="o">.</span><span class="na">map</span><span class="o">{</span>
-<span class="w">		</span><span class="o">[</span><span class="s2">&quot;custom id&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">it</span><span class="o">]</span>
-<span class="o">}.</span><span class="na">view</span><span class="o">()</span>
 </pre></div>
 </div>
 </details><div class="line-block">
