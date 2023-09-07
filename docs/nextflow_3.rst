@@ -1,3 +1,10 @@
+.. _nextflow_3-page:
+
+*******************
+Nextflow 3
+*******************
+
+
 Decoupling resources, parameters and Nextflow script
 =======================
 
