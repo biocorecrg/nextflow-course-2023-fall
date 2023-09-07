@@ -91,14 +91,14 @@ As we see before we need to escape some characters. So it can be very tedious wh
 
 You can see an example of this code by looking at the script `test1_a.nf` where the one-liner is replaced by a shell script:
 
-.. literalinclude:: ../nextflow/test1/test1_b.nf
+.. literalinclude:: ../nextflow/test1/test1_a.nf
    :language: groovy
-   :emphasize-lines: 25-43
+   :lines: 25-43
 
 Here instead the shell script in `bin/splitseq.sh`
 
 .. literalinclude:: ../nextflow/bin/splitseq.sh
-   :language: shell
+   :language: bash
 
 Named workflows
 ----------------
