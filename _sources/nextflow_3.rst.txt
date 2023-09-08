@@ -1,7 +1,7 @@
 .. _nextflow_3-page:
 
 *******************
-Nextflow 3
+3 Nextflow
 *******************
 
 
