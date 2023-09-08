@@ -26,7 +26,7 @@ The first part defines the "default" resources for a process:
 .. literalinclude:: ../nextflow/test2/nextflow.config
    :language: groovy
    :lines: 3-17
-   :emphasize-lines: 3-6
+   :emphasize-lines: 1-4
 
 
 Then are specified the resources needed for a class of processes labeled **bigmem**. In brief, the default options will be overridden for the processes labeled **bigmem** and **onecpu**:
@@ -34,7 +34,7 @@ Then are specified the resources needed for a class of processes labeled **bigme
 .. literalinclude:: ../nextflow/test2/nextflow.config
    :language: groovy
    :lines: 3-17
-   :emphasize-lines: 8-16
+   :emphasize-lines: 6-14
 
 
 In the script **/test2/test2.nf file**, there are two processes to run two programs:
@@ -194,37 +194,6 @@ You can see that the default mode to publish the results in Nextflow is `soft li
 
 .. note::
 	IMPORTANT: You can also "move" the results but this is not suggested for files that will be needed for other processes. This will likely disrupt your pipeline
-
-To access the output files via the web they can be copied to your `S3 bucket <https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html>`__ . Your bucket is mounted in **/mnt**:
-
-.. code-block:: console
-
-	ls /mnt
-
-	/mnt/nf-class-bucket-1
-
-
-
-.. note::
-	In this class, each student has their own bucket, with the number corresponding to the number of the AWS instance.
-
-Let's copy the **multiqc_report.html** file in the S3 bucket and change the privileges:
-
-.. code-block:: console
-
-	cp output_multiQC/multiqc_report.html /mnt/nf-class-bucket-1
-
-	sudo chmod 775 /mnt/nf-class-bucket-1/multiqc_report.html
-
-
-Now you will be able to see this html file via the browser (change the bucket number to correspond to your instance):
-
-.. code-block:: console
-
-	http://nf-class-bucket-1.s3.eu-central-1.amazonaws.com/multiqc_report.html
-
-
-
 
 
 Adding help section to a pipeline
