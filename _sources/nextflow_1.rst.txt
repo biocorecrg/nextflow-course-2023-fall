@@ -283,9 +283,6 @@ The process can be seen as a function that is composed of:
 Any kind of code/command line can be run there, as it is **language agnostic**.
 
 
-.. note::
-	You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file a program.
-
 .. tip::
 	Before the input, you can indicate a **tag** that will be reported in the log. This is quite useful for **logging/debugging**.
 
@@ -337,7 +334,28 @@ Let's inspect the log file:
 
 	cat log.txt
 
-	N E X T F L O W  ~  version 20.07.1
+	N E X T F L O W  ~  version 23.08.1-edge
+	Launching `test0.nf` [sleepy_perlman] DSL2 - revision: 203a1d860a
+	[7b/235410] Submitted process > printHello (1)
+	[f6/9fee82] Submitted process > printHello (3)
+	[6b/094899] Submitted process > printHello (2)
+	hello in Italian is ciao
+	bonjour in Italian is ciao
+	hola in Italian is ciao
+
+
+We can add a **tag** to our processes: this will allow us to see, for instance, which is the input used by each process execution. You can run test0_a.nf where we introduce this code:
+
+.. literalinclude:: ../nextflow/test0/test0_a.nf
+   :language: groovy
+   :emphasize-lines: 23
+
+
+and obtain:
+
+.. code-block:: console
+
+N E X T F L O W  ~  version 23.08.1-edge
 	Launching `test0.nf` [high_fermat] - revision: b129d66e57
 	[6a/2dfcaf] Submitted process > printHello (hola)
 	[24/a286da] Submitted process > printHello (hello)
@@ -345,9 +363,6 @@ Let's inspect the log file:
 	hola in Italian is ciao
 	hello in Italian is ciao
 	bonjour in Italian is ciao
-
-
-The **tag** allows us to see that the process **printHello** was launched three times using the *hola*, *hello*, and *bonjour* values contained in the input channel.
 
 
 At the start of each row, there is an **alphanumeric code**:
@@ -370,7 +385,7 @@ Let's have a look inside that folder:
 	echo work/6a/2dfcaf*
 	  work/6a/2dfcafc01350f475c60b2696047a87
 
-	# List was is inside the folder
+	# List of files inside the folder
 
 	ls -alht work/6a/2dfcaf*
 	total 40
@@ -393,7 +408,7 @@ You see a lot of "hidden" files:
 - **.command.err**, contains the standard error of the command execution
 - **.command.begin**, contains what has to be executed before `.command.sh`
 - **.command.sh**, contains the block of code indicated in the process
-- **.command.run**, contains the code made by Nextflow for the execution of `.command.sh`, and contains environmental variables, eventual invocations of Linux containers etc.
+- **.command.run**, contains the code made by Nextflow for the execution of `.command.sh`, and contains environmental variables, eventual invocations of Linux containers, etc.
 
 For example, the content of `.command.sh` is:
 

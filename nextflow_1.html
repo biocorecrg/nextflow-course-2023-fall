@@ -408,10 +408,6 @@ It uses the <a class="reference external" href="https://www.nextflow.io/docs/lat
 <li><p>A <strong>script</strong> part where we have the block of code to be executed using data from the input channel, and that will produce the output for the output channel.</p></li>
 </ul>
 <p>Any kind of code/command line can be run there, as it is <strong>language agnostic</strong>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file a program.</p>
-</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Before the input, you can indicate a <strong>tag</strong> that will be reported in the log. This is quite useful for <strong>logging/debugging</strong>.</p>
@@ -460,7 +456,6 @@ It uses the <a class="reference external" href="https://www.nextflow.io/docs/lat
 <span class="cm"> */</span>
 
 <span class="n">process</span><span class="w"> </span><span class="n">printHello</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${str_in}&quot;</span><span class="w"> </span><span class="o">}</span>
 <span class="w">    </span>
 <span class="w">    </span><span class="nl">input:</span>
 <span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">str_in</span>
@@ -498,17 +493,80 @@ It uses the <a class="reference external" href="https://www.nextflow.io/docs/lat
 <p>Let’s inspect the log file:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cat log.txt</span>
 
-<span class="go">N E X T F L O W  ~  version 20.07.1</span>
-<span class="go">Launching `test0.nf` [high_fermat] - revision: b129d66e57</span>
-<span class="go">[6a/2dfcaf] Submitted process &gt; printHello (hola)</span>
-<span class="go">[24/a286da] Submitted process &gt; printHello (hello)</span>
-<span class="go">[04/e733db] Submitted process &gt; printHello (bonjour)</span>
-<span class="go">hola in Italian is ciao</span>
+<span class="go">N E X T F L O W  ~  version 23.08.1-edge</span>
+<span class="go">Launching `test0.nf` [sleepy_perlman] DSL2 - revision: 203a1d860a</span>
+<span class="go">[7b/235410] Submitted process &gt; printHello (1)</span>
+<span class="go">[f6/9fee82] Submitted process &gt; printHello (3)</span>
+<span class="go">[6b/094899] Submitted process &gt; printHello (2)</span>
 <span class="go">hello in Italian is ciao</span>
 <span class="go">bonjour in Italian is ciao</span>
+<span class="go">hola in Italian is ciao</span>
 </pre></div>
 </div>
-<p>The <strong>tag</strong> allows us to see that the process <strong>printHello</strong> was launched three times using the <em>hola</em>, <em>hello</em>, and <em>bonjour</em> values contained in the input channel.</p>
+<p>We can add a <strong>tag</strong> to our processes: this will allow us to see, for instance, which is the input used by each process execution. You can run test0_a.nf where we introduce this code:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
+
+<span class="cm">/* </span>
+<span class="cm"> * This code enables the new dsl of Nextflow. </span>
+<span class="cm"> */</span>
+<span class="w"> </span>
+<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
+
+<span class="cm">/* </span>
+<span class="cm"> * Creates a channel emitting some string values</span>
+<span class="cm"> */</span>
+<span class="w"> </span>
+<span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="s1">&#39;hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;bonjour&#39;</span><span class="o">)</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Creates a process which receive an input channel containing values</span>
+<span class="cm"> * Each value emitted by the channel triggers the execution </span>
+<span class="cm"> * of the process. The process stdout is caputured and send over </span>
+<span class="cm"> * the another channel. </span>
+<span class="cm"> */</span>
+
+<span class="n">process</span><span class="w"> </span><span class="n">printHello</span><span class="w"> </span><span class="o">{</span>
+<span class="hll"><span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${str_in}&quot;</span><span class="w"> </span><span class="o">}</span>
+</span><span class="w">    </span>
+<span class="w">    </span><span class="nl">input:</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">str_in</span>
+
+<span class="w">    </span><span class="nl">output:</span><span class="w"> </span>
+<span class="w">    </span><span class="n">stdout</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="nl">script:</span>
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    echo ${str_in} in Italian is ciao </span>
+<span class="s2">    &quot;&quot;&quot;</span>
+<span class="o">}</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * A workflow consist of a number of invocations of processes</span>
+<span class="cm"> * where they are fed with the expected input channels </span>
+<span class="cm"> * as they were cutom functions. You can only invoke once a process per workflow.</span>
+<span class="cm"> */</span>
+
+<span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">printHello</span><span class="o">(</span><span class="n">str</span><span class="o">)</span>
+<span class="w">    </span><span class="n">result</span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
+<span class="o">}</span>
+<span class="w"> </span>
+</pre></div>
+</div>
+<p>and obtain:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>N E X T F L O W  ~  version 23.08.1-edge</dt><dd><p>Launching <cite>test0.nf</cite> [high_fermat] - revision: b129d66e57
+[6a/2dfcaf] Submitted process &gt; printHello (hola)
+[24/a286da] Submitted process &gt; printHello (hello)
+[04/e733db] Submitted process &gt; printHello (bonjour)
+hola in Italian is ciao
+hello in Italian is ciao
+bonjour in Italian is ciao</p>
+</dd>
+</dl>
 <p>At the start of each row, there is an <strong>alphanumeric code</strong>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">**[6a/2dfcaf]** Submitted process &gt; printHello (hola)</span>
 </pre></div>
@@ -524,7 +582,7 @@ It uses the <a class="reference external" href="https://www.nextflow.io/docs/lat
 <span class="go">echo work/6a/2dfcaf*</span>
 <span class="go">  work/6a/2dfcafc01350f475c60b2696047a87</span>
 
-<span class="gp"># </span>List<span class="w"> </span>was<span class="w"> </span>is<span class="w"> </span>inside<span class="w"> </span>the<span class="w"> </span>folder
+<span class="gp"># </span>List<span class="w"> </span>of<span class="w"> </span>files<span class="w"> </span>inside<span class="w"> </span>the<span class="w"> </span>folder
 
 <span class="go">ls -alht work/6a/2dfcaf*</span>
 <span class="go">total 40</span>
@@ -547,7 +605,7 @@ It uses the <a class="reference external" href="https://www.nextflow.io/docs/lat
 <li><p><strong>.command.err</strong>, contains the standard error of the command execution</p></li>
 <li><p><strong>.command.begin</strong>, contains what has to be executed before <cite>.command.sh</cite></p></li>
 <li><p><strong>.command.sh</strong>, contains the block of code indicated in the process</p></li>
-<li><p><strong>.command.run</strong>, contains the code made by Nextflow for the execution of <cite>.command.sh</cite>, and contains environmental variables, eventual invocations of Linux containers etc.</p></li>
+<li><p><strong>.command.run</strong>, contains the code made by Nextflow for the execution of <cite>.command.sh</cite>, and contains environmental variables, eventual invocations of Linux containers, etc.</p></li>
 </ul>
 <p>For example, the content of <cite>.command.sh</cite> is:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cat work/6a/2dfcaf*/.command.sh</span>
