@@ -98,9 +98,7 @@ This can be achieved using two additional files:</p>
 </ul>
 <p>The <strong>nextflow.config</strong> file allows to indicate resources needed for each class of processes.
 This is achieved by labeling processes in the nextflow.config file:</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span><span class="w"> </span><span class="s2">&quot;$baseDir/params.config&quot;</span>
-
-<span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
 <span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 <span class="w">    </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
@@ -115,18 +113,43 @@ This is achieved by labeling processes in the nextflow.config file:</p>
 <span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
-
-<span class="n">process</span><span class="o">.</span><span class="na">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
-<span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$baseDir/singularity&quot;</span>
 </pre></div>
 </div>
-<p>The first row indicates to use of the information stored in the <strong>params.config</strong> file (described later). Then follows the definition of the default resources for a process:</p>
-<p>Then we specify resources needed for a class of processes labeled <strong>bigmem</strong> (i.e., the default options will be overridden for these processes):</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;bigmem&#39;</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
-<span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<p>The first part defines the “default” resources for a process:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="hll"><span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span><span class="hll"><span class="w">    </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
+</span><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;bigmem&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
+<span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
+</div>
+<p>Then are specified the resources needed for a class of processes labeled <strong>bigmem</strong>. In brief, the default options will be overridden for the processes labeled <strong>bigmem</strong> and <strong>onecpu</strong>:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">    </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
+
+<span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span><span class="hll"><span class="w">    </span><span class="o">}</span>
+</span><span class="hll">
+</span><span class="hll"><span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;bigmem&#39;</span><span class="w"> </span><span class="o">{</span>
+</span><span class="hll"><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
+</span><span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span><span class="hll"><span class="w">    </span><span class="o">}</span>
+</span><span class="hll"><span class="o">}</span>
+</span></pre></div>
 </div>
 <p>In the script <strong>/test2/test2.nf file</strong>, there are two processes to run two programs:</p>
 <ul class="simple">
@@ -244,7 +267,7 @@ This is achieved by labeling processes in the nextflow.config file:</p>
 <p>You can see that the process <strong>fastQC</strong> is labeled ‘bigmem’.</p>
 <p>The last two rows of the config file indicate which containers to use.
 In this example, – and by default, if the repository is not specified, – a container is pulled from the DockerHub.
-In case of using a singularity container, you can indicate where to store the local image using the <strong>singularity.cacheDir</strong> option:</p>
+In the case of using a singularity container, you can indicate where to store the local image using the <strong>singularity.cacheDir</strong> option:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="na">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
 <span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$baseDir/singularity&quot;</span>
 </pre></div>
@@ -327,6 +350,29 @@ In case of using a singularity container, you can indicate where to store the lo
 </pre></div>
 </div>
 <p>As you can see, we indicated two pipeline parameters, <cite>reads</cite> and <cite>email</cite>; when running the pipeline, they can be overridden using <cite>--reads</cite> and <cite>--email</cite>.</p>
+<p>This file is included thanks again to the <strong>nextflow.config</strong> file, here shown entirely</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="n">includeConfig</span><span class="w"> </span><span class="s2">&quot;$baseDir/params.config&quot;</span>
+</span>
+<span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">    </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
+
+<span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;bigmem&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
+<span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">process</span><span class="o">.</span><span class="na">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
+<span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$baseDir/singularity&quot;</span>
+</pre></div>
+</div>
 <p>Now, let’s examine the folders generated by the pipeline.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls  work/2a/22e3df887b1b5ac8af4f9cd0d88ac5/</span>
 
