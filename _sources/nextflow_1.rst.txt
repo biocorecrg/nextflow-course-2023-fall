@@ -355,7 +355,7 @@ and obtain:
 
 .. code-block:: console
 
-N E X T F L O W  ~  version 23.08.1-edge
+	N E X T F L O W  ~  version 23.08.1-edge
 	Launching `test0.nf` [high_fermat] - revision: b129d66e57
 	[6a/2dfcaf] Submitted process > printHello (hola)
 	[24/a286da] Submitted process > printHello (hello)
