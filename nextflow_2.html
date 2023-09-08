@@ -146,7 +146,7 @@
 <p class="admonition-title">Note</p>
 <p>The variables used by AWK need to be escaped, otherwise, they will be considered as proper Nextflow variables and thus produce an error. Every special character, e.g., <strong>$</strong>, needs to be escaped (<strong>$</strong>). This script can be seen at <strong>/test1/test1.nf</strong></p>
 </div>
-<p>The input path is fed as a parameter using the script parameters <strong>${seq}</strong></p>
+<p>The input path is fed as a parameter using the script parameters <strong>${inputfile}</strong></p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// this can be overridden by using --inputfile OTHERFILENAME</span>
 <span class="n">params</span><span class="o">.</span><span class="na">inputfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$baseDir/../../testdata/test.fa&quot;</span><span class="w">	</span>
 
