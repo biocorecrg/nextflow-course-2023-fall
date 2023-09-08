@@ -116,13 +116,13 @@ This is achieved by labeling processes in the nextflow.config file:</p>
 </pre></div>
 </div>
 <p>The first part defines the “default” resources for a process:</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
-<span class="hll"><span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+</span><span class="hll"><span class="w">    </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+</span><span class="hll"><span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 </span><span class="hll"><span class="w">    </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
-</span><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+</span>
+<span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
 <span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 <span class="w">    </span><span class="o">}</span>
 
@@ -139,17 +139,17 @@ This is achieved by labeling processes in the nextflow.config file:</p>
 <span class="w">    </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 <span class="w">    </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
 
-<span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
-<span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="hll"><span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;onecpu&#39;</span><span class="w"> </span><span class="o">{</span>
+</span><span class="hll"><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+</span><span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 </span><span class="hll"><span class="w">    </span><span class="o">}</span>
 </span><span class="hll">
 </span><span class="hll"><span class="w">    </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;bigmem&#39;</span><span class="w"> </span><span class="o">{</span>
 </span><span class="hll"><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
 </span><span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 </span><span class="hll"><span class="w">    </span><span class="o">}</span>
-</span><span class="hll"><span class="o">}</span>
-</span></pre></div>
+</span><span class="o">}</span>
+</pre></div>
 </div>
 <p>In the script <strong>/test2/test2.nf file</strong>, there are two processes to run two programs:</p>
 <ul class="simple">
@@ -504,26 +504,6 @@ We can indicate which process and output can be considered the final output of t
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>IMPORTANT: You can also “move” the results but this is not suggested for files that will be needed for other processes. This will likely disrupt your pipeline</p>
-</div>
-<p>To access the output files via the web they can be copied to your <a class="reference external" href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html">S3 bucket</a> . Your bucket is mounted in <strong>/mnt</strong>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls /mnt</span>
-
-<span class="go">/mnt/nf-class-bucket-1</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In this class, each student has their own bucket, with the number corresponding to the number of the AWS instance.</p>
-</div>
-<p>Let’s copy the <strong>multiqc_report.html</strong> file in the S3 bucket and change the privileges:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cp output_multiQC/multiqc_report.html /mnt/nf-class-bucket-1</span>
-
-<span class="go">sudo chmod 775 /mnt/nf-class-bucket-1/multiqc_report.html</span>
-</pre></div>
-</div>
-<p>Now you will be able to see this html file via the browser (change the bucket number to correspond to your instance):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">http://nf-class-bucket-1.s3.eu-central-1.amazonaws.com/multiqc_report.html</span>
-</pre></div>
 </div>
 </section>
 </section>
