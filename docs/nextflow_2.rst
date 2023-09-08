@@ -42,6 +42,12 @@ This value can be overridden when calling the script:
 
 The workflow part connects the two processes so that the output of the first process becomes an input of the second process.
 
+.. literalinclude:: ../nextflow/test1/test1.nf
+   :language: groovy
+   :lines: 67-80
+
+
+
 During the execution, Nextflow creates several temporary folders and a soft link to the original input file. It will then store output files locally.
 
 The output file is then *linked* to other folders to be used as input from other processes.
