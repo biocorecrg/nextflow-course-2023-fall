@@ -30,7 +30,7 @@ The input path is fed as a parameter using the script parameters **${seq}**
 
 
 .. note::
-	The file "test.fa" is available in the `github repository of the course <https://github.com/biocorecrg/CRG_Nextflow_Jun_2022/tree/main/testdata>`__
+	The file "test.fa" is available in the `github repository of the course <https://github.com/biocorecrg/nextflow-course-2023-fall/tree/main/testdata>`__
 
 
 This value can be overridden when calling the script:
