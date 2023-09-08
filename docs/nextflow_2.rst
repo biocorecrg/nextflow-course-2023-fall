@@ -9,9 +9,6 @@ More complex scripts
 ============
 Now, we will introduce a more complex script, where we the channel produced as output from a process feeds another process in the workflow definition. 
 
-.. note::
-	The variables used by AWK need to be escaped, otherwise, they will be considered as proper Nextflow variables and thus produce an error. Every special character, e.g., **$**, needs to be escaped (**\$**). This script can be seen at **/test1/test1.nf**
-
 Here we have two simple processes:
 
 - the former splits the input fasta file into **single sequences**.
@@ -20,6 +17,9 @@ Here we have two simple processes:
 .. literalinclude:: ../nextflow/test1/test1.nf
    :language: groovy
    :lines: 25-65
+
+.. note::
+	The variables used by AWK need to be escaped, otherwise, they will be considered as proper Nextflow variables and thus produce an error. Every special character, e.g., **$**, needs to be escaped (**\$**). This script can be seen at **/test1/test1.nf**
 
 
 The input path is fed as a parameter using the script parameters **${seq}**
