@@ -131,18 +131,12 @@ First, you need to access the `tower.nf <https://tower.nf/>`__ website and login
 .. image:: images/tower.png
   :width: 800
 
-
-If you selected the email for receiving the instructions and the token to be used.
+We recommend using either Google or GitHub for login. The email has to be accepted manually by the tower team.
 
 .. image:: images/tower0.png
   :width: 800
 
-check the email:
-
-.. image:: images/tower1.png
-  :width: 800
-
-
+Once you are signed in you will see a page like this:
 
 .. image:: images/tower2.png
   :width: 800
@@ -163,7 +157,6 @@ or exporting those environmental variables:
 .. code-block:: groovy
 
 	export TOWER_ACCESS_TOKEN=*******YOUR***TOKEN*****HERE*******
-	export NXF_VER=21.04.0
 
 
 Now we can launch the pipeline:

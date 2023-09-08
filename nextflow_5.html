@@ -442,10 +442,9 @@ Let’s inspect the <strong>multiQC</strong> module:</p>
 <p>We will show the open-source one.</p>
 <p>First, you need to access the <a class="reference external" href="https://tower.nf/">tower.nf</a> website and login.</p>
 <a class="reference internal image-reference" href="_images/tower.png"><img alt="_images/tower.png" src="_images/tower.png" style="width: 800px;" /></a>
-<p>If you selected the email for receiving the instructions and the token to be used.</p>
+<p>We recommend using either Google or GitHub for login. The email has to be accepted manually by the tower team.</p>
 <a class="reference internal image-reference" href="_images/tower0.png"><img alt="_images/tower0.png" src="_images/tower0.png" style="width: 800px;" /></a>
-<p>check the email:</p>
-<a class="reference internal image-reference" href="_images/tower1.png"><img alt="_images/tower1.png" src="_images/tower1.png" style="width: 800px;" /></a>
+<p>Once you are signed in you will see a page like this:</p>
 <a class="reference internal image-reference" href="_images/tower2.png"><img alt="_images/tower2.png" src="_images/tower2.png" style="width: 800px;" /></a>
 <p>You can generate your token at <a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> and copy-paste it into your pipeline using this snippet in the configuration file:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">tower</span><span class="w"> </span><span class="o">{</span>
@@ -456,7 +455,6 @@ Let’s inspect the <strong>multiQC</strong> module:</p>
 </div>
 <p>or exporting those environmental variables:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">export</span><span class="w"> </span><span class="n">TOWER_ACCESS_TOKEN</span><span class="o">=*******</span><span class="n">YOUR</span><span class="o">***</span><span class="n">TOKEN</span><span class="o">*****</span><span class="n">HERE</span><span class="o">*******</span>
-<span class="n">export</span><span class="w"> </span><span class="n">NXF_VER</span><span class="o">=</span><span class="mf">21.04</span><span class="o">.</span><span class="mi">0</span>
 </pre></div>
 </div>
 <p>Now we can launch the pipeline:</p>
