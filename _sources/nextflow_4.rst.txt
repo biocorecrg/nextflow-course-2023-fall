@@ -14,6 +14,7 @@ Nextflow will take care of **pulling, converting, and storing the image** for yo
 
 Within an AWS main node, both Docker and Singularity are available. While within the AWS batch system, only Docker is available.
 
+
 .. code-block:: console
 
 	nextflow run test2.nf -with-singularity -bg > log
