@@ -145,7 +145,7 @@ The second process **bowtieAln** is the alignment step:
 
 .. literalinclude:: ../nextflow/test3/test3.nf
    :language: groovy
-   :emphasize-lines: 103-124
+   :lines: 103-124
 
 
 There are two different input channels, the **index** and **reads**.
@@ -173,7 +173,7 @@ This section will allow us to connect these outputs directly with other processe
 
 .. literalinclude:: ../nextflow/test3/test3.nf
    :language: groovy
-   :emphasize-lines: 145-152
+   :lines: 145-152
 
 
 As you can see, we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
@@ -201,7 +201,7 @@ The first profile indicates the resources needed for running the pipeline locall
 
 .. literalinclude:: ../nextflow/test3/nextflow.config
    :language: groovy
-   :emphasize-lines: 8-21
+   :lines: 1-21
 
 
 As you can see, we explicitly indicated the **local** executor. By definition, the local executor is a default executor if the pipeline is run without specifying a profile.
@@ -210,7 +210,7 @@ The second profile is for running the pipeline on the **cluster**; here in parti
 
 .. literalinclude:: ../nextflow/test3/nextflow.config
    :language: groovy
-   :emphasize-lines: 22-38
+   :lines: 22-38
 
 
 This profile indicates that the system uses **Sun Grid Engine** as a job scheduler and that we have different queues for small jobs and more intensive ones.
