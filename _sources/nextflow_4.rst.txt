@@ -1,7 +1,7 @@
 .. _nextflow_4-page:
 
 *******************
-Nextflow 4
+4 Nextflow 
 *******************
 
 Using Singularity
