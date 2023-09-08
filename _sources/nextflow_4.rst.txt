@@ -84,7 +84,7 @@ Thus we can launch this command outside the pipeline (locally):
 	Approx 60% complete for B7_H3K4me1_s_chr19.fastq.gz
 	...
 
-If you have to submit a job to a HPC you need to use the corresponding program, **qsub** or **sbatch**.
+If you have to submit a job to a HPC you need to use the corresponding program, such as **qsub** if you have a Sun Grid Engine or **sbatch** if you have Slurm. Here an example using SGE:
 
 .. code-block:: console
 
@@ -130,7 +130,7 @@ And we have to add two new processes. The first one is for indexing the referenc
 
 .. literalinclude:: ../nextflow/test3/test3.nf
    :language: groovy
-   :emphasize-lines: 82-101
+   :lines: 82-101
 
 
 Since bowtie indexing requires an unzipped reference fasta file, we first **gunzip** it, then build the reference index, and finally remove the unzipped file.
