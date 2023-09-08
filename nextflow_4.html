@@ -365,282 +365,7 @@ Nextflow will take care of the dependencies between the input/output and the par
 <p>The first element of the list is the <strong>name of the index as a value</strong>, and the second is a <strong>list of files constituting the index</strong>.</p>
 <p>The former is needed for building the command line of the alignment step, the latter are the files needed for the alignment.</p>
 <p>The second process <strong>bowtieAln</strong> is the alignment step:</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
-
-<span class="cm">/* </span>
-<span class="cm"> * This code enables the new dsl of Nextflow. </span>
-<span class="cm"> */</span>
-
-<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
-
-
-<span class="cm">/* </span>
-<span class="cm"> * NextFlow test pipe</span>
-<span class="cm"> * @authors</span>
-<span class="cm"> * Luca Cozzuto &lt;lucacozzuto@gmail.com&gt;</span>
-<span class="cm"> * </span>
-<span class="cm"> */</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Input parameters: read pairs</span>
-<span class="cm"> * Params are stored in the params.config file</span>
-<span class="cm"> */</span>
-
-<span class="n">version</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span>
-<span class="c1">// this prevents a warning of undefined parameter</span>
-<span class="n">params</span><span class="o">.</span><span class="na">help</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
-
-<span class="c1">// this prints the input parameters</span>
-<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">BIOCORE@CRG - N F TESTPIPE  ~  version ${version}</span>
-<span class="s2">=============================================</span>
-<span class="s2">reads                           : ${params.reads}</span>
-<span class="s2">reference                       : ${params.reference}</span>
-<span class="s2">outdir                          : ${params.outdir}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="c1">// this prints the help in case you use --help parameter in the command line and it stops the pipeline</span>
-<span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">help</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s1">&#39;This is the Biocore\&#39;s NF test pipeline&#39;</span>
-<span class="w">    </span><span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s1">&#39;Enjoy!&#39;</span>
-<span class="w">    </span><span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span>
-<span class="w">    </span><span class="n">exit</span><span class="w"> </span><span class="mi">1</span>
-<span class="o">}</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Defining the output folders.</span>
-<span class="cm"> */</span>
-<span class="n">fastqcOutputFolder</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/ouptut_fastqc&quot;</span>
-<span class="n">alnOutputFolder</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/ouptut_aln&quot;</span>
-<span class="n">multiqcOutputFolder</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/ouptut_multiQC&quot;</span>
-
-
-<span class="cm">/* Reading the file list and creating a &quot;Channel&quot;: a queue that connects different channels.</span>
-<span class="cm"> * The queue is consumed by channels, so you cannot re-use a channel for different processes. </span>
-<span class="cm"> * If you need the same data for different processes you need to make more channels.</span>
-<span class="cm"> */</span>
-<span class="w"> </span>
-<span class="n">Channel</span>
-<span class="w">    </span><span class="o">.</span><span class="na">fromPath</span><span class="o">(</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">reads</span><span class="w"> </span><span class="o">)</span><span class="w">  											 </span>
-<span class="w">    </span><span class="o">.</span><span class="na">ifEmpty</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="s2">&quot;Cannot find any reads matching: ${params.reads}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
-<span class="w">    </span><span class="o">.</span><span class="na">set</span><span class="w"> </span><span class="o">{</span><span class="n">reads</span><span class="o">}</span><span class="w"> 											 </span>
-
-<span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">reference</span><span class="o">)</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Process 1. Run FastQC on raw data. A process is the element for executing scripts / programs etc.</span>
-<span class="cm"> */</span>
-<span class="n">process</span><span class="w"> </span><span class="n">fastQC</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="n">fastqcOutputFolder</span><span class="w">  			</span>
-<span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${reads}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w">  							</span>
-
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="n">reads</span><span class="w">   							</span>
-
-<span class="w">    </span><span class="nl">output:</span><span class="w">									</span>
-<span class="w">   	</span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;*_fastqc.*&quot;</span>
-
-<span class="w">    </span><span class="nl">script:</span><span class="w">									</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        fastqc ${reads} </span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<span class="o">}</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Process 2. Bowtie index</span>
-<span class="cm"> */</span>
-<span class="n">process</span><span class="w"> </span><span class="n">bowtieIdx</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${ref}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w">  							</span>
-
-
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="n">ref</span><span class="w">   							</span>
-
-<span class="w">    </span><span class="nl">output:</span><span class="w">									</span>
-<span class="w">   	</span><span class="n">tuple</span><span class="w"> </span><span class="n">val</span><span class="o">(</span><span class="s2">&quot;${ref}&quot;</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">(</span><span class="s2">&quot;${ref}*.ebwt&quot;</span><span class="o">)</span>
-
-<span class="w">    </span><span class="nl">script:</span><span class="w">									</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        gunzip -c ${ref} &gt; reference.fa</span>
-<span class="s2">        bowtie-build reference.fa ${ref}</span>
-<span class="s2">        rm reference.fa</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<span class="o">}</span>
-
-<span class="hll"><span class="cm">/*</span>
-</span><span class="hll"><span class="cm"> * Process 3. Bowtie alignment</span>
-</span><span class="hll"><span class="cm"> */</span>
-</span><span class="hll"><span class="n">process</span><span class="w"> </span><span class="n">bowtieAln</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="n">alnOutputFolder</span><span class="o">,</span><span class="w"> </span><span class="nl">pattern:</span><span class="w"> </span><span class="s1">&#39;*.sam&#39;</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${reads}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w">  							</span>
-</span><span class="hll"><span class="w">    </span><span class="n">label</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">    </span><span class="nl">input:</span>
-</span><span class="hll"><span class="w">    </span><span class="n">tuple</span><span class="w"> </span><span class="n">val</span><span class="o">(</span><span class="n">refname</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">(</span><span class="n">ref_files</span><span class="o">)</span>
-</span><span class="hll"><span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="n">reads</span><span class="w">  							</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">    </span><span class="nl">output:</span><span class="w">									</span>
-</span><span class="hll"><span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.sam&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_sam</span>
-</span><span class="hll"><span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.log&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_log</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">    </span><span class="nl">script:</span><span class="w">									</span>
-</span><span class="hll"><span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-</span><span class="hll"><span class="s2">    bowtie -p ${task.cpus} ${refname} -q ${reads} -S &gt; ${reads}.sam 2&gt; ${reads}.log</span>
-</span><span class="hll"><span class="s2">    &quot;&quot;&quot;</span>
-</span><span class="hll"><span class="o">}</span>
-</span><span class="cm">/*</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Process 4. Run multiQC on fastQC results</span>
-<span class="cm"> */</span>
-<span class="n">process</span><span class="w"> </span><span class="n">multiQC</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="n">multiqcOutputFolder</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span><span class="w"> 	</span><span class="c1">// this time do not link but copy the output file</span>
-
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">(</span><span class="n">inputfiles</span><span class="o">)</span>
-
-<span class="w">    </span><span class="nl">output:</span>
-<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;multiqc_report.html&quot;</span><span class="o">)</span><span class="w"> 					</span>
-
-<span class="w">    </span><span class="nl">script:</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    multiqc .</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<span class="o">}</span>
-
-<span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">reads</span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
-<span class="w">	</span><span class="n">fastqc_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fastQC</span><span class="o">(</span><span class="n">reads</span><span class="o">)</span>
-<span class="w">	</span><span class="n">bowtie_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bowtieIdx</span><span class="o">(</span><span class="n">reference</span><span class="o">)</span>
-<span class="w">	</span><span class="n">bowtieAln</span><span class="o">(</span><span class="n">bowtie_index</span><span class="o">,</span><span class="w"> </span><span class="n">reads</span><span class="o">)</span>
-<span class="w">	</span>
-<span class="w">	</span><span class="n">multiQC</span><span class="o">(</span><span class="n">fastqc_out</span><span class="o">.</span><span class="na">mix</span><span class="o">(</span><span class="n">bowtieAln</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">samples_log</span><span class="o">).</span><span class="na">collect</span><span class="o">())</span>
-<span class="o">}</span>
-
-
-<span class="n">workflow</span><span class="o">.</span><span class="na">onComplete</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
-<span class="w">	</span><span class="n">println</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">success</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;\nDone! Open the following report in your browser --&gt; ${multiqcOutputFolder}/multiqc_report.html\n&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Oops .. something went wrong&quot;</span><span class="w"> </span><span class="o">)</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-<p>There are two different input channels, the <strong>index</strong> and <strong>reads</strong>.</p>
-<p>The index name specified by <strong>refname</strong> is used for building the command line; while the index files, indicated by <strong>ref_files</strong>, are linked to the current directory by using the <strong>path</strong> qualifier.</p>
-<p>We also produced two kinds of outputs, the <strong>alignments</strong> and <strong>logs</strong>.
-The first one is the one we want to keep as a final result; for that, we specify the <strong>pattern</strong> parameter in <strong>publishDir</strong>.</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">publishDir</span><span class="w"> </span><span class="n">alnOutputFolder</span><span class="o">,</span><span class="w"> </span><span class="nl">pattern:</span><span class="w"> </span><span class="s1">&#39;*.sam&#39;</span>
-</pre></div>
-</div>
-<p>The second output will be passed to the next process, which is the multiQC process. To distinguish the outputs let’s assign them different names.</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.sam&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_sam</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.log&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_log</span>
-</pre></div>
-</div>
-<p>This section will allow us to connect these outputs directly with other processes when we call them in the workflow section:</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
-
-<span class="cm">/* </span>
-<span class="cm"> * This code enables the new dsl of Nextflow. </span>
-<span class="cm"> */</span>
-
-<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
-
-
-<span class="cm">/* </span>
-<span class="cm"> * NextFlow test pipe</span>
-<span class="cm"> * @authors</span>
-<span class="cm"> * Luca Cozzuto &lt;lucacozzuto@gmail.com&gt;</span>
-<span class="cm"> * </span>
-<span class="cm"> */</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Input parameters: read pairs</span>
-<span class="cm"> * Params are stored in the params.config file</span>
-<span class="cm"> */</span>
-
-<span class="n">version</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span>
-<span class="c1">// this prevents a warning of undefined parameter</span>
-<span class="n">params</span><span class="o">.</span><span class="na">help</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
-
-<span class="c1">// this prints the input parameters</span>
-<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">BIOCORE@CRG - N F TESTPIPE  ~  version ${version}</span>
-<span class="s2">=============================================</span>
-<span class="s2">reads                           : ${params.reads}</span>
-<span class="s2">reference                       : ${params.reference}</span>
-<span class="s2">outdir                          : ${params.outdir}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="c1">// this prints the help in case you use --help parameter in the command line and it stops the pipeline</span>
-<span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">help</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s1">&#39;This is the Biocore\&#39;s NF test pipeline&#39;</span>
-<span class="w">    </span><span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s1">&#39;Enjoy!&#39;</span>
-<span class="w">    </span><span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span>
-<span class="w">    </span><span class="n">exit</span><span class="w"> </span><span class="mi">1</span>
-<span class="o">}</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Defining the output folders.</span>
-<span class="cm"> */</span>
-<span class="n">fastqcOutputFolder</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/ouptut_fastqc&quot;</span>
-<span class="n">alnOutputFolder</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/ouptut_aln&quot;</span>
-<span class="n">multiqcOutputFolder</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/ouptut_multiQC&quot;</span>
-
-
-<span class="cm">/* Reading the file list and creating a &quot;Channel&quot;: a queue that connects different channels.</span>
-<span class="cm"> * The queue is consumed by channels, so you cannot re-use a channel for different processes. </span>
-<span class="cm"> * If you need the same data for different processes you need to make more channels.</span>
-<span class="cm"> */</span>
-<span class="w"> </span>
-<span class="n">Channel</span>
-<span class="w">    </span><span class="o">.</span><span class="na">fromPath</span><span class="o">(</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">reads</span><span class="w"> </span><span class="o">)</span><span class="w">  											 </span>
-<span class="w">    </span><span class="o">.</span><span class="na">ifEmpty</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="s2">&quot;Cannot find any reads matching: ${params.reads}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
-<span class="w">    </span><span class="o">.</span><span class="na">set</span><span class="w"> </span><span class="o">{</span><span class="n">reads</span><span class="o">}</span><span class="w"> 											 </span>
-
-<span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">reference</span><span class="o">)</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Process 1. Run FastQC on raw data. A process is the element for executing scripts / programs etc.</span>
-<span class="cm"> */</span>
-<span class="n">process</span><span class="w"> </span><span class="n">fastQC</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="n">fastqcOutputFolder</span><span class="w">  			</span>
-<span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${reads}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w">  							</span>
-
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="n">reads</span><span class="w">   							</span>
-
-<span class="w">    </span><span class="nl">output:</span><span class="w">									</span>
-<span class="w">   	</span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;*_fastqc.*&quot;</span>
-
-<span class="w">    </span><span class="nl">script:</span><span class="w">									</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        fastqc ${reads} </span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<span class="o">}</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Process 2. Bowtie index</span>
-<span class="cm"> */</span>
-<span class="n">process</span><span class="w"> </span><span class="n">bowtieIdx</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${ref}&quot;</span><span class="w"> </span><span class="o">}</span><span class="w">  							</span>
-
-
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="n">ref</span><span class="w">   							</span>
-
-<span class="w">    </span><span class="nl">output:</span><span class="w">									</span>
-<span class="w">   	</span><span class="n">tuple</span><span class="w"> </span><span class="n">val</span><span class="o">(</span><span class="s2">&quot;${ref}&quot;</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">(</span><span class="s2">&quot;${ref}*.ebwt&quot;</span><span class="o">)</span>
-
-<span class="w">    </span><span class="nl">script:</span><span class="w">									</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        gunzip -c ${ref} &gt; reference.fa</span>
-<span class="s2">        bowtie-build reference.fa ${ref}</span>
-<span class="s2">        rm reference.fa</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<span class="o">}</span>
-
-<span class="cm">/*</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Process 3. Bowtie alignment</span>
 <span class="cm"> */</span>
 <span class="n">process</span><span class="w"> </span><span class="n">bowtieAln</span><span class="w"> </span><span class="o">{</span>
@@ -662,38 +387,29 @@ The first one is the one we want to keep as a final result; for that, we specify
 <span class="s2">    bowtie -p ${task.cpus} ${refname} -q ${reads} -S &gt; ${reads}.sam 2&gt; ${reads}.log</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
-<span class="cm">/*</span>
-
-<span class="cm">/*</span>
-<span class="cm"> * Process 4. Run multiQC on fastQC results</span>
-<span class="cm"> */</span>
-<span class="n">process</span><span class="w"> </span><span class="n">multiQC</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="n">multiqcOutputFolder</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span><span class="w"> 	</span><span class="c1">// this time do not link but copy the output file</span>
-
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">(</span><span class="n">inputfiles</span><span class="o">)</span>
-
-<span class="w">    </span><span class="nl">output:</span>
-<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;multiqc_report.html&quot;</span><span class="o">)</span><span class="w"> 					</span>
-
-<span class="w">    </span><span class="nl">script:</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    multiqc .</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<span class="o">}</span>
-
-<span class="hll"><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">    </span><span class="n">reads</span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
-</span><span class="hll"><span class="w">	</span><span class="n">fastqc_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fastQC</span><span class="o">(</span><span class="n">reads</span><span class="o">)</span>
-</span><span class="hll"><span class="w">	</span><span class="n">bowtie_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bowtieIdx</span><span class="o">(</span><span class="n">reference</span><span class="o">)</span>
-</span><span class="hll"><span class="w">	</span><span class="n">bowtieAln</span><span class="o">(</span><span class="n">bowtie_index</span><span class="o">,</span><span class="w"> </span><span class="n">reads</span><span class="o">)</span>
-</span><span class="hll"><span class="w">	</span>
-</span><span class="hll"><span class="w">	</span><span class="n">multiQC</span><span class="o">(</span><span class="n">fastqc_out</span><span class="o">.</span><span class="na">mix</span><span class="o">(</span><span class="n">bowtieAln</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">samples_log</span><span class="o">).</span><span class="na">collect</span><span class="o">())</span>
-</span><span class="hll"><span class="o">}</span>
-</span>
-
-<span class="n">workflow</span><span class="o">.</span><span class="na">onComplete</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
-<span class="w">	</span><span class="n">println</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">success</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;\nDone! Open the following report in your browser --&gt; ${multiqcOutputFolder}/multiqc_report.html\n&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Oops .. something went wrong&quot;</span><span class="w"> </span><span class="o">)</span>
+</pre></div>
+</div>
+<p>There are two different input channels, the <strong>index</strong> and <strong>reads</strong>.</p>
+<p>The index name specified by <strong>refname</strong> is used for building the command line; while the index files, indicated by <strong>ref_files</strong>, are linked to the current directory by using the <strong>path</strong> qualifier.</p>
+<p>We also produced two kinds of outputs, the <strong>alignments</strong> and <strong>logs</strong>.
+The first one is the one we want to keep as a final result; for that, we specify the <strong>pattern</strong> parameter in <strong>publishDir</strong>.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">publishDir</span><span class="w"> </span><span class="n">alnOutputFolder</span><span class="o">,</span><span class="w"> </span><span class="nl">pattern:</span><span class="w"> </span><span class="s1">&#39;*.sam&#39;</span>
+</pre></div>
+</div>
+<p>The second output will be passed to the next process, which is the multiQC process. To distinguish the outputs let’s assign them different names.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
+<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.sam&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_sam</span>
+<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${reads}.log&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">samples_log</span>
+</pre></div>
+</div>
+<p>This section will allow us to connect these outputs directly with other processes when we call them in the workflow section:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">reads</span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
+<span class="w">	</span><span class="n">fastqc_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fastQC</span><span class="o">(</span><span class="n">reads</span><span class="o">)</span>
+<span class="w">	</span><span class="n">bowtie_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bowtieIdx</span><span class="o">(</span><span class="n">reference</span><span class="o">)</span>
+<span class="w">	</span><span class="n">bowtieAln</span><span class="o">(</span><span class="n">bowtie_index</span><span class="o">,</span><span class="w"> </span><span class="n">reads</span><span class="o">)</span>
+<span class="w">	</span>
+<span class="w">	</span><span class="n">multiQC</span><span class="o">(</span><span class="n">fastqc_out</span><span class="o">.</span><span class="na">mix</span><span class="o">(</span><span class="n">bowtieAln</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">samples_log</span><span class="o">).</span><span class="na">collect</span><span class="o">())</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -719,21 +435,25 @@ The first one is the one we want to keep as a final result; for that, we specify
 
 
 <span class="n">profiles</span><span class="w"> </span><span class="o">{</span>
-<span class="hll"><span class="w">  </span><span class="n">standard</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">     </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">        </span><span class="n">containerOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="o">}</span>
-</span><span class="hll"><span class="w">        </span><span class="n">executor</span><span class="o">=</span><span class="s2">&quot;local&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
-</span><span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-</span><span class="hll"><span class="w">        </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">        </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">            </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
-</span><span class="hll"><span class="w">            </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-</span><span class="hll"><span class="w">        </span><span class="o">}</span>
-</span><span class="hll"><span class="w">   	  </span><span class="o">}</span>
-</span><span class="hll"><span class="w">   </span><span class="o">}</span>
-</span><span class="w">   </span><span class="n">cluster</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="n">standard</span><span class="w"> </span><span class="o">{</span>
+<span class="w">     </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">containerOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="o">}</span>
+<span class="w">        </span><span class="n">executor</span><span class="o">=</span><span class="s2">&quot;local&quot;</span>
+<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">        </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
+
+<span class="w">        </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+<span class="w">            </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">   	  </span><span class="o">}</span>
+<span class="w">   </span><span class="o">}</span>
+</pre></div>
+</div>
+<p>As you can see, we explicitly indicated the <strong>local</strong> executor. By definition, the local executor is a default executor if the pipeline is run without specifying a profile.</p>
+<p>The second profile is for running the pipeline on the <strong>cluster</strong>; here in particular for the cluster supporting the Sun Grid Engine queuing system:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="n">cluster</span><span class="w"> </span><span class="o">{</span>
 <span class="w">     </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">containerOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="o">}</span>
 <span class="w">        </span><span class="n">executor</span><span class="o">=</span><span class="s2">&quot;SGE&quot;</span>
@@ -750,88 +470,6 @@ The first one is the one we want to keep as a final result; for that, we specify
 <span class="w">        </span><span class="o">}</span>
 <span class="w">      </span><span class="o">}</span>
 <span class="w">   </span><span class="o">}</span>
-
-<span class="w">   </span><span class="n">cloud</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">workDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;s3://nf-class-bucket-XXX/work&#39;</span>
-<span class="w">    </span><span class="n">aws</span><span class="o">.</span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;eu-central-1&#39;</span>
-<span class="w">    </span><span class="n">aws</span><span class="o">.</span><span class="na">batch</span><span class="o">.</span><span class="na">cliPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/home/ec2-user/miniconda/bin/aws&#39;</span>
-<span class="w">    </span>
-<span class="w">   </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">       </span><span class="n">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;awsbatch&#39;</span>
-<span class="w">       </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;spot&#39;</span>
-<span class="w">       </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;1G&#39;</span>
-<span class="w">       </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-<span class="w">       </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
-
-<span class="w">       </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span><span class="o">{</span>
-<span class="w">           </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;2G&#39;</span>
-<span class="w">           </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>
-<span class="w">       </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="w">  </span><span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-<p>As you can see, we explicitly indicated the <strong>local</strong> executor. By definition, the local executor is a default executor if the pipeline is run without specifying a profile.</p>
-<p>The second profile is for running the pipeline on the <strong>cluster</strong>; here in particular for the cluster supporting the Sun Grid Engine queuing system:</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span><span class="w"> </span><span class="s2">&quot;$baseDir/params.config&quot;</span>
-
-<span class="n">process</span><span class="o">.</span><span class="na">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
-<span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$baseDir/singularity&quot;</span>
-
-
-<span class="n">profiles</span><span class="w"> </span><span class="o">{</span>
-<span class="w">  </span><span class="n">standard</span><span class="w"> </span><span class="o">{</span>
-<span class="w">     </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">containerOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="o">}</span>
-<span class="w">        </span><span class="n">executor</span><span class="o">=</span><span class="s2">&quot;local&quot;</span>
-<span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
-<span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-<span class="w">        </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
-
-<span class="w">        </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
-<span class="w">            </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">   	  </span><span class="o">}</span>
-<span class="w">   </span><span class="o">}</span>
-<span class="hll"><span class="w">   </span><span class="n">cluster</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">     </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">        </span><span class="n">containerOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="o">}</span>
-</span><span class="hll"><span class="w">        </span><span class="n">executor</span><span class="o">=</span><span class="s2">&quot;SGE&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;smallcpus&quot;</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">        </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;1G&#39;</span>
-</span><span class="hll"><span class="w">        </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-</span><span class="hll"><span class="w">        </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
-</span><span class="hll">
-</span><span class="hll"><span class="w">        </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span><span class="o">{</span>
-</span><span class="hll"><span class="w">            </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bigcpus&quot;</span>
-</span><span class="hll"><span class="w">            </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;4G&#39;</span>
-</span><span class="hll"><span class="w">            </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>
-</span><span class="hll"><span class="w">        </span><span class="o">}</span>
-</span><span class="hll"><span class="w">      </span><span class="o">}</span>
-</span><span class="hll"><span class="w">   </span><span class="o">}</span>
-</span>
-<span class="w">   </span><span class="n">cloud</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">workDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;s3://nf-class-bucket-XXX/work&#39;</span>
-<span class="w">    </span><span class="n">aws</span><span class="o">.</span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;eu-central-1&#39;</span>
-<span class="w">    </span><span class="n">aws</span><span class="o">.</span><span class="na">batch</span><span class="o">.</span><span class="na">cliPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/home/ec2-user/miniconda/bin/aws&#39;</span>
-<span class="w">    </span>
-<span class="w">   </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">       </span><span class="n">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;awsbatch&#39;</span>
-<span class="w">       </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;spot&#39;</span>
-<span class="w">       </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;1G&#39;</span>
-<span class="w">       </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
-<span class="w">       </span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
-
-<span class="w">       </span><span class="nl">withLabel:</span><span class="w"> </span><span class="s1">&#39;twocpus&#39;</span><span class="w"> </span><span class="o">{</span>
-<span class="w">           </span><span class="n">memory</span><span class="o">=</span><span class="s1">&#39;2G&#39;</span>
-<span class="w">           </span><span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>
-<span class="w">       </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="w">  </span><span class="o">}</span>
-<span class="o">}</span>
 </pre></div>
 </div>
 <p>This profile indicates that the system uses <strong>Sun Grid Engine</strong> as a job scheduler and that we have different queues for small jobs and more intensive ones.</p>
