@@ -69,13 +69,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#docker-images-list-images">docker images: list images</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-run-run-image-i-e-start-a-container">docker run: run image, i.e. start a container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-ps-check-containers-status">docker ps: check containers status</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-exec-execute-process-in-running-container">docker exec: execute process in running container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-stop-start-restart-actions-on-container">docker stop, start, restart: actions on container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-rm-docker-rmi-clean-up">docker rm, docker rmi: clean up!</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#major-clean">Major clean</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#volumes">Volumes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#singularity">Singularity</a><ul>
@@ -88,7 +85,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#running-and-executing-containers">Running and executing containers</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#singularity-shell">Singularity shell</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#singularity-exec">Singularity exec</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#singularity-run">Singularity run</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#environment-control">Environment control</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#exercise">Exercise</a></li>
 </ul>
@@ -284,7 +280,7 @@
 <li><p>choose the version of Ubuntu you are fetching: check the different tags</p></li>
 </ul>
 <a class="reference internal image-reference" href="_images/dockerhub_ubuntu_1804.png"><img alt="_images/dockerhub_ubuntu_1804.png" src="_images/dockerhub_ubuntu_1804.png" style="width: 850px;" /></a>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:18.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:22.04</span>
 </pre></div>
 </div>
 </section>
@@ -328,19 +324,10 @@
 </pre></div>
 </div>
 <p>You can either execute programs in the image from the command line (see above) or <strong>execute a container interactively</strong>, i.e. <strong>“enter”</strong> the container.</p>
+<p>With <strong>--name</strong> you can provide a name to the container.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:22.04 /bin/bash</span>
-</pre></div>
-</div>
-<p>Run container as daemon (in background)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach ubuntu:22.04</span>
 
-<span class="go">docker run --detach ubuntu:22.04 tail -f /dev/null</span>
-</pre></div>
-</div>
-<p>Run container as daemon (in background) with a given name</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach --name myubuntu ubuntu:22.04</span>
-
-<span class="go">docker run --detach --name myubuntu ubuntu:22.04 tail -f /dev/null</span>
+<span class="go">docker run --name myubuntu -it ubuntu:22.04 /bin/bash</span>
 </pre></div>
 </div>
 </section>
@@ -352,51 +339,6 @@
 </div>
 <p>List all containers (whether they are running or not):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Each container has a unique ID.</p>
-</section>
-<section id="docker-exec-execute-process-in-running-container">
-<h3>docker exec: execute process in running container<a class="headerlink" href="#docker-exec-execute-process-in-running-container" title="Link to this heading"></a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker exec myubuntu uname -a</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Interactively</p></li>
-</ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker exec -it myubuntu /bin/bash</span>
-</pre></div>
-</div>
-</section>
-<section id="docker-stop-start-restart-actions-on-container">
-<h3>docker stop, start, restart: actions on container<a class="headerlink" href="#docker-stop-start-restart-actions-on-container" title="Link to this heading"></a></h3>
-<p>Stop a running container:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker stop myubuntu</span>
-
-<span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Start a stopped container (does NOT create a new one):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker start myubuntu</span>
-
-<span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Restart a running container:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker restart myubuntu</span>
-
-<span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Run with restart enabled</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:22.04 tail -f /dev/null</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Restart policies: no (default), always, on-failure, unless-stopped</p></li>
-</ul>
-<p>Update restart policy</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker update --restart unless-stopped myubuntu</span>
 </pre></div>
 </div>
 </section>
@@ -427,22 +369,6 @@
 <li><p>Reference: <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes">https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes</a></p></li>
 </ul>
 </section>
-</section>
-<section id="volumes">
-<h3>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h3>
-<p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
-<p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir data</span>
-<span class="go">touch data/test</span>
-<span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>copy<span class="w"> </span>the<span class="w"> </span>FASTQ<span class="w"> </span>we<span class="w"> </span>used<span class="w"> </span><span class="k">in</span><span class="w"> </span>previous<span class="w"> </span>exercises...<span class="w"> </span>cp<span class="w"> </span>...
-<span class="go">docker run --detach --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 tail -f /dev/null</span>
-<span class="go">docker exec -ti fastqc_container /bin/bash</span>
-<span class="go">&gt; ls -l /scratch</span>
-<span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>run<span class="w"> </span>fastqc<span class="w"> </span>from<span class="w"> </span>here
-<span class="go">&gt; cd /scratch; fastqc SRR6466185_1.fastq.gz</span>
-<span class="go">&gt; exit</span>
-</pre></div>
-</div>
 </section>
 </section>
 <section id="singularity">
@@ -543,7 +469,7 @@
 <p>Once we have some image files (or directories) ready, we can run processes.</p>
 <section id="singularity-shell">
 <h4>Singularity shell<a class="headerlink" href="#singularity-shell" title="Link to this heading"></a></h4>
-<p>The straight-forward exploratory approach is equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">biocontainers/fastqc:v0.11.9_cv7</span> <span class="pre">/bin/shell</span></code> but with a more handy syntax.</p>
+<p>The straight-forward exploratory approach is equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">biocontainers/fastqc:v0.11.9_cv7</span> <span class="pre">/bin/sh</span></code> but with a more handy syntax.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell fastqc-0.11.9.sif</span>
 </pre></div>
 </div>
@@ -560,19 +486,11 @@
 </pre></div>
 </div>
 </section>
-<section id="singularity-run">
-<h4>Singularity run<a class="headerlink" href="#singularity-run" title="Link to this heading"></a></h4>
-<p>This executes runscript from recipe definition (equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>). Not so common for HPC uses. More common for instances (servers).</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity run fastqc-0.11.9.sif</span>
-</pre></div>
-</div>
-</section>
 <section id="environment-control">
 <h4>Environment control<a class="headerlink" href="#environment-control" title="Link to this heading"></a></h4>
 <p>By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell -e fastqc-0.11.9.sif</span>
 <span class="go">singularity exec -e fastqc-0.11.9.sif fastqc</span>
-<span class="go">singularity run -e fastqc-0.11.9.sif</span>
 </pre></div>
 </div>
 <p>Compare <code class="docutils literal notranslate"><span class="pre">env</span></code> command with and without -e modifier.</p>
@@ -583,12 +501,12 @@
 </section>
 <section id="exercise">
 <h4>Exercise<a class="headerlink" href="#exercise" title="Link to this heading"></a></h4>
-<p>Using the 2 fastq available files, process them outside and inside a mounted directory using fastqc.</p>
+<p>Using the 2 fastq available files, process them using fastqc.</p>
 <details>
 <summary><a>Suggested solution</a></summary><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>dummy<span class="w"> </span>directory
 <span class="go">mkdir data</span>
 
-<span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>copy<span class="w"> </span>contents<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span><span class="k">in</span><span class="w"> </span>that<span class="w"> </span>directory
+<span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>copy<span class="w"> </span>contents<span class="w"> </span>FASTQC<span class="w"> </span>files<span class="w"> </span><span class="k">in</span><span class="w"> </span>data<span class="w"> </span>directory
 
 <span class="go">singularity exec fastqc.sif fastqc data/*fastq.gz</span>
 
@@ -600,12 +518,6 @@
 <span class="go">&gt; cd data</span>
 <span class="go">&gt; fastqc *fastq.gz</span>
 <span class="go">&gt; exit</span>
-
-<span class="gp"># </span>Check<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>some<span class="w"> </span>HTMLs<span class="w"> </span>there.<span class="w"> </span>Remove<span class="w"> </span>them
-<span class="go">singularity exec -B ./data:/scratch fastqc.sif fastqc /scratch/*fastq.gz</span>
-
-<span class="gp"># </span>What<span class="w"> </span>happens<span class="w"> </span>here!
-<span class="go">singularity exec -B ./data:/scratch fastqc.sif bash -c &#39;fastqc /scratch/*fastq.gz&#39;</span>
 </pre></div>
 </div>
 </details></section>

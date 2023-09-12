@@ -168,7 +168,7 @@ docker pull: import image
 
 .. code-block:: console
 
-  docker pull ubuntu:18.04
+  docker pull ubuntu:22.04
 
 
 Biocontainers
@@ -237,27 +237,13 @@ You can execute any program/command that is stored inside the image:
 
 You can either execute programs in the image from the command line (see above) or **execute a container interactively**, i.e. **"enter"** the container.
 
+With **\--name** you can provide a name to the container.
+
 .. code-block:: console
 
   docker run -it ubuntu:22.04 /bin/bash
 
-
-Run container as daemon (in background)
-
-.. code-block:: console
-
-  docker run -ti --detach ubuntu:22.04
-
-  docker run --detach ubuntu:22.04 tail -f /dev/null
-  
-
-Run container as daemon (in background) with a given name
-
-.. code-block:: console
-
-  docker run -ti --detach --name myubuntu ubuntu:22.04
-
-  docker run --detach --name myubuntu ubuntu:22.04 tail -f /dev/null
+  docker run --name myubuntu -it ubuntu:22.04 /bin/bash
 
 
 docker ps: check containers status
@@ -275,68 +261,6 @@ List all containers (whether they are running or not):
 .. code-block:: console
 
   docker ps -a
-
-
-Each container has a unique ID.
-
-docker exec: execute process in running container
--------------------------------------------------
-
-.. code-block:: console
-
-  docker exec myubuntu uname -a
-
-
-* Interactively
-
-.. code-block:: console
-
-  docker exec -it myubuntu /bin/bash
-
-
-docker stop, start, restart: actions on container
--------------------------------------------------
-
-Stop a running container:
-
-.. code-block:: console
-
-  docker stop myubuntu
-
-  docker ps -a
-
-
-Start a stopped container (does NOT create a new one):
-
-.. code-block:: console
-
-  docker start myubuntu
-
-  docker ps -a
-
-
-Restart a running container:
-
-.. code-block:: console
-
-  docker restart myubuntu
-
-  docker ps -a
-
-
-Run with restart enabled
-
-.. code-block:: console
-
-  docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:22.04 tail -f /dev/null
-
-* Restart policies: no (default), always, on-failure, unless-stopped
-
-Update restart policy
-
-.. code-block:: console
-
-  docker update --restart unless-stopped myubuntu
 
 
 docker rm, docker rmi: clean up!
@@ -377,27 +301,6 @@ Remove ALL non-running containers, images, etc. - **DO WITH MUCH MORE CARE!!!**
   docker system prune -a
 
 * Reference: https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
-
-
-Volumes
--------
-
-Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.
-
-Syntax: **\--volume/-v** *host:container*
-
-.. code-block:: console
-
-  mkdir data
-  touch data/test
-  # We can also copy the FASTQ we used in previous exercises... cp ...
-  docker run --detach --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 tail -f /dev/null
-  docker exec -ti fastqc_container /bin/bash
-  > ls -l /scratch
-  # We can also run fastqc from here
-  > cd /scratch; fastqc SRR6466185_1.fastq.gz 
-  > exit
-
 
 Singularity
 ===========
@@ -503,7 +406,7 @@ Once we have some image files (or directories) ready, we can run processes.
 Singularity shell
 *****************
 
-The straight-forward exploratory approach is equivalent to ``docker run -ti biocontainers/fastqc:v0.11.9_cv7 /bin/shell`` but with a more handy syntax.
+The straight-forward exploratory approach is equivalent to ``docker run -ti biocontainers/fastqc:v0.11.9_cv7 /bin/sh`` but with a more handy syntax.
 
 .. code-block:: console
 
@@ -527,17 +430,6 @@ a processing of a FASTQ file from *data* directory:
 
     singularity exec fastqc-0.11.9_cv7.sif fastqc SRR6466185_1.fastq.gz
 
-
-Singularity run
-***************
-
-This executes runscript from recipe definition (equivalent to ``docker run``). Not so common for HPC uses. More common for instances (servers).
-
-.. code-block:: console
-
-    singularity run fastqc-0.11.9.sif
-
-
 Environment control
 *******************
 
@@ -547,8 +439,6 @@ By default Singularity inherits a profile environment (e.g., PATH environment va
 
     singularity shell -e fastqc-0.11.9.sif
     singularity exec -e fastqc-0.11.9.sif fastqc
-    singularity run -e fastqc-0.11.9.sif
-
 
 Compare ``env`` command with and without -e modifier.
 
@@ -560,7 +450,7 @@ Compare ``env`` command with and without -e modifier.
 Exercise
 ********
 
-Using the 2 fastq available files, process them outside and inside a mounted directory using fastqc.
+Using the 2 fastq available files, process them using fastqc.
 
 .. raw:: html
 
@@ -573,7 +463,7 @@ Using the 2 fastq available files, process them outside and inside a mounted dir
 	# Let's create a dummy directory
 	mkdir data
 
-	# Let's copy contents of data in that directory
+	# Let's copy contents FASTQC files in data directory
 
 	singularity exec fastqc.sif fastqc data/*fastq.gz
 
@@ -585,12 +475,6 @@ Using the 2 fastq available files, process them outside and inside a mounted dir
 	> cd data
 	> fastqc *fastq.gz
 	> exit
-
-	# Check you have some HTMLs there. Remove them
-	singularity exec -B ./data:/scratch fastqc.sif fastqc /scratch/*fastq.gz
-
-	# What happens here!
-	singularity exec -B ./data:/scratch fastqc.sif bash -c 'fastqc /scratch/*fastq.gz'
 
 .. raw:: html
 
