@@ -122,18 +122,22 @@ The first workflow will just run like the previous script, while the second will
 
 The **reverseSequence** process of the second workflow will run in parallel if you have enough processors, or if you are running the script in a cluster environment, with a scheduler supported by Nextflow.
 
+Our named workflows have an **<<output>>** too this time. It is specified using the **emit** keyword. 
+
 .. code-block:: console
 
-	nextflow run test1_b.nf -bg
+	nextflow run test1_b.nf
+	N E X T F L O W  ~  version 23.08.1-edge
+	Launching `test1_b.nf` [suspicious_faggin] DSL2 - revision: d89b62c1d4
+	executor >  local (6)
+	[18/37c7cb] process > flow1:splitSequences                      [100%] 1 of 1 ✔
+	[cc/458cd1] process > flow1:reverseSequence (seq_1 seq_2 seq_3) [100%] 1 of 1 ✔
+	[eb/cf273d] process > flow2:splitSequences                      [100%] 1 of 1 ✔
+	[f7/ce4ed9] process > flow2:reverseSequence (seq_1)             [100%] 3 of 3 ✔
+	/Users/lcozzuto/aaa/nextflow-course-2023-fall/nextflow/test1/work/6f/e1ed9278d23363b740693e287a4167/all.rev
+	/Users/lcozzuto/aaa/nextflow-course-2023-fall/nextflow/test1/work/b2/ad05b00fcfca30fa7a4fbec4dad811/all.rev
+	/Users/lcozzuto/aaa/nextflow-course-2023-fall/nextflow/test1/work/f7/ce4ed995da248211f125e5b91ab762/all.rev
 
-	C02WX1XFHV2Q:nextflow lcozzuto$ N E X T F L O W  ~  version 20.07.1
-	Launching `test1.nf` [insane_plateau] - revision: d33befe154
-	[bd/f4e9a6] Submitted process > flow1:splitSequences
-	[37/d790ab] Submitted process > flow2:splitSequences
-	[33/a6fc72] Submitted process > flow1:reverseSequence ([seq_1, seq_2, seq_3])
-	[87/54bfe8] Submitted process > flow2:reverseSequence (seq_2)
-	[45/86dd83] Submitted process > flow2:reverseSequence (seq_1)
-	[93/c7b1c6] Submitted process > flow2:reverseSequence (seq_3)
 
 
 Exercise

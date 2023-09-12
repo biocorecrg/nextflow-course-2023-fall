@@ -324,16 +324,18 @@ awk<span class="w"> </span><span class="s1">&#39;/^&gt;/ {f=&quot;seq_&quot;++d}
 </div>
 <p>The first workflow will just run like the previous script, while the second will “flatten” the output of the first process and will launch the second process on every single sequence.</p>
 <p>The <strong>reverseSequence</strong> process of the second workflow will run in parallel if you have enough processors, or if you are running the script in a cluster environment, with a scheduler supported by Nextflow.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test1_b.nf -bg</span>
-
-<span class="gp">C02WX1XFHV2Q:nextflow lcozzuto$ </span>N<span class="w"> </span>E<span class="w"> </span>X<span class="w"> </span>T<span class="w"> </span>F<span class="w"> </span>L<span class="w"> </span>O<span class="w"> </span>W<span class="w">  </span>~<span class="w">  </span>version<span class="w"> </span><span class="m">20</span>.07.1
-<span class="go">Launching `test1.nf` [insane_plateau] - revision: d33befe154</span>
-<span class="go">[bd/f4e9a6] Submitted process &gt; flow1:splitSequences</span>
-<span class="go">[37/d790ab] Submitted process &gt; flow2:splitSequences</span>
-<span class="go">[33/a6fc72] Submitted process &gt; flow1:reverseSequence ([seq_1, seq_2, seq_3])</span>
-<span class="go">[87/54bfe8] Submitted process &gt; flow2:reverseSequence (seq_2)</span>
-<span class="go">[45/86dd83] Submitted process &gt; flow2:reverseSequence (seq_1)</span>
-<span class="go">[93/c7b1c6] Submitted process &gt; flow2:reverseSequence (seq_3)</span>
+<p>Our named workflows have an <strong>&lt;&lt;output&gt;&gt;</strong> too this time. It is specified using the <strong>emit</strong> keyword.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test1_b.nf</span>
+<span class="go">N E X T F L O W  ~  version 23.08.1-edge</span>
+<span class="go">Launching `test1_b.nf` [suspicious_faggin] DSL2 - revision: d89b62c1d4</span>
+<span class="go">executor &gt;  local (6)</span>
+<span class="go">[18/37c7cb] process &gt; flow1:splitSequences                      [100%] 1 of 1 ✔</span>
+<span class="go">[cc/458cd1] process &gt; flow1:reverseSequence (seq_1 seq_2 seq_3) [100%] 1 of 1 ✔</span>
+<span class="go">[eb/cf273d] process &gt; flow2:splitSequences                      [100%] 1 of 1 ✔</span>
+<span class="go">[f7/ce4ed9] process &gt; flow2:reverseSequence (seq_1)             [100%] 3 of 3 ✔</span>
+<span class="go">/Users/lcozzuto/aaa/nextflow-course-2023-fall/nextflow/test1/work/6f/e1ed9278d23363b740693e287a4167/all.rev</span>
+<span class="go">/Users/lcozzuto/aaa/nextflow-course-2023-fall/nextflow/test1/work/b2/ad05b00fcfca30fa7a4fbec4dad811/all.rev</span>
+<span class="go">/Users/lcozzuto/aaa/nextflow-course-2023-fall/nextflow/test1/work/f7/ce4ed995da248211f125e5b91ab762/all.rev</span>
 </pre></div>
 </div>
 </section>
