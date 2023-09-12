@@ -65,10 +65,6 @@ CONS. * Need more space and resources.                       * Some cases might 
 Docker
 ======
 
-.. image:: https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png
-  :width: 400
-
-
 What is Docker?
 -------------------
 
@@ -222,7 +218,7 @@ docker run image:tag **command**
 
 .. code-block:: console
 
-  docker run ubuntu:18.04 /bin/ls
+  docker run ubuntu:22.04 /bin/ls
 
 
 .. image:: images/docker_run_ls.png
@@ -235,33 +231,33 @@ You can execute any program/command that is stored inside the image:
 
 .. code-block:: console
 
-  docker run ubuntu:18.04 /bin/whoami
-  docker run ubuntu:18.04 cat /etc/issue
+  docker run ubuntu:22.04 /bin/whoami
+  docker run ubuntu:22.04 cat /etc/issue
 
 
 You can either execute programs in the image from the command line (see above) or **execute a container interactively**, i.e. **"enter"** the container.
 
 .. code-block:: console
 
-  docker run -it ubuntu:18.04 /bin/bash
+  docker run -it ubuntu:22.04 /bin/bash
 
 
 Run container as daemon (in background)
 
 .. code-block:: console
 
-  docker run -ti --detach ubuntu:18.04
+  docker run -ti --detach ubuntu:22.04
 
-  docker run --detach ubuntu:18.04 tail -f /dev/null
+  docker run --detach ubuntu:22.04 tail -f /dev/null
   
 
 Run container as daemon (in background) with a given name
 
 .. code-block:: console
 
-  docker run -ti --detach --name myubuntu ubuntu:18.04
+  docker run -ti --detach --name myubuntu ubuntu:22.04
 
-  docker run --detach --name myubuntu ubuntu:18.04 tail -f /dev/null
+  docker run --detach --name myubuntu ubuntu:22.04 tail -f /dev/null
 
 
 docker ps: check containers status
@@ -332,7 +328,7 @@ Run with restart enabled
 
 .. code-block:: console
 
-  docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:18.04 tail -f /dev/null
+  docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:22.04 tail -f /dev/null
 
 * Restart policies: no (default), always, on-failure, unless-stopped
 
@@ -354,7 +350,7 @@ docker rm, docker rmi: clean up!
 
 .. code-block:: console
 
-  docker rmi ubuntu:18.04
+  docker rmi ubuntu:22.04
 
 
 Major clean
@@ -388,7 +384,7 @@ Volumes
 
 Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.
 
-Syntax: **--volume/-v** *host:container*
+Syntax: **\--volume/-v** *host:container*
 
 .. code-block:: console
 

@@ -213,7 +213,6 @@
 </section>
 <section id="docker">
 <h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
-<a class="reference internal image-reference" href="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png"><img alt="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png" src="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png" style="width: 400px;" /></a>
 <section id="what-is-docker">
 <h3>What is Docker?<a class="headerlink" href="#what-is-docker" title="Link to this heading"></a></h3>
 <ul class="simple">
@@ -318,30 +317,30 @@
 <p><strong>docker run</strong> creates a fresh container (active instance of the image) from a <strong>Docker (static) image</strong>, and runs it.</p>
 <p>The format is:</p>
 <p>docker run image:tag <strong>command</strong></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:18.04 /bin/ls</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:22.04 /bin/ls</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/docker_run_ls.png"><img alt="_images/docker_run_ls.png" src="_images/docker_run_ls.png" style="width: 200px;" /></a>
 <p>Now execute <strong>ls</strong> in your current working directory: is the result the same?</p>
 <p>You can execute any program/command that is stored inside the image:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:18.04 /bin/whoami</span>
-<span class="go">docker run ubuntu:18.04 cat /etc/issue</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:22.04 /bin/whoami</span>
+<span class="go">docker run ubuntu:22.04 cat /etc/issue</span>
 </pre></div>
 </div>
 <p>You can either execute programs in the image from the command line (see above) or <strong>execute a container interactively</strong>, i.e. <strong>“enter”</strong> the container.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:18.04 /bin/bash</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:22.04 /bin/bash</span>
 </pre></div>
 </div>
 <p>Run container as daemon (in background)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach ubuntu:18.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach ubuntu:22.04</span>
 
-<span class="go">docker run --detach ubuntu:18.04 tail -f /dev/null</span>
+<span class="go">docker run --detach ubuntu:22.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 <p>Run container as daemon (in background) with a given name</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach --name myubuntu ubuntu:18.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -ti --detach --name myubuntu ubuntu:22.04</span>
 
-<span class="go">docker run --detach --name myubuntu ubuntu:18.04 tail -f /dev/null</span>
+<span class="go">docker run --detach --name myubuntu ubuntu:22.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 </section>
@@ -390,7 +389,7 @@
 </pre></div>
 </div>
 <p>Run with restart enabled</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:18.04 tail -f /dev/null</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:22.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -407,7 +406,7 @@
 <span class="go">docker rm -f myubuntu</span>
 </pre></div>
 </div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:18.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:22.04</span>
 </pre></div>
 </div>
 <section id="major-clean">
@@ -432,7 +431,7 @@
 <section id="volumes">
 <h3>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h3>
 <p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
-<p>Syntax: <strong>–volume/-v</strong> <em>host:container</em></p>
+<p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir data</span>
 <span class="go">touch data/test</span>
 <span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>copy<span class="w"> </span>the<span class="w"> </span>FASTQ<span class="w"> </span>we<span class="w"> </span>used<span class="w"> </span><span class="k">in</span><span class="w"> </span>previous<span class="w"> </span>exercises...<span class="w"> </span>cp<span class="w"> </span>...
