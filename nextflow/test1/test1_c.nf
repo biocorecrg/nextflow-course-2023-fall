@@ -52,6 +52,10 @@ workflow flow1 {
     main:
     splitted_seq        = splitSequences(sequences)
     rev_single_seq      = reverseSequence(splitted_seq)
+
+    emit:
+    rev_single_seq
+
 }
 
 workflow flow2 {
@@ -60,9 +64,15 @@ workflow flow2 {
     main:
     splitted_seq        = splitSequences(sequences).flatten()
     rev_single_seq      = reverseSequence(splitted_seq)
+
+    emit:
+    rev_single_seq
+
 }
 
 workflow {
-   flow1(sequences_file)
-   flow2(sequences_file)
+   out1 = flow1(sequences_file)
+   out2 = flow2(sequences_file)
+   out2.view()
+
 }
