@@ -383,7 +383,7 @@
 <p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir data</span>
 <span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>copy<span class="w"> </span>some<span class="w"> </span>FASTQ<span class="w"> </span><span class="k">in</span><span class="w"> </span>data
-<span class="go">docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/SRR6466185_1.fastq.gz</span>
+<span class="go">docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/B7_input_s_chr19.fastq.gz</span>
 </pre></div>
 </div>
 </section>
@@ -499,7 +499,7 @@
 </pre></div>
 </div>
 <p>a processing of a FASTQ file from <em>data</em> directory:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9_cv7.sif fastqc SRR6466185_1.fastq.gz</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9_cv7.sif fastqc B7_input_s_chr19.fastq.gz</span>
 </pre></div>
 </div>
 </section>

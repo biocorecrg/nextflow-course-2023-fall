@@ -287,7 +287,7 @@ Syntax: **\--volume/-v** *host:container*
 .. code-block:: console
   mkdir data
   # We can also copy the FASTQ we used in data
-  docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/SRR6466185_1.fastq.gz 
+  docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/B7_input_s_chr19.fastq.gz 
 
 
 Major clean
@@ -327,7 +327,7 @@ Syntax: **\--volume/-v** *host:container*
 
   mkdir data
   # We can copy some FASTQ in data
-  docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/SRR6466185_1.fastq.gz
+  docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/B7_input_s_chr19.fastq.gz
 
 Singularity
 ===========
@@ -455,7 +455,7 @@ a processing of a FASTQ file from *data* directory:
 
 .. code-block:: console
 
-    singularity exec fastqc-0.11.9_cv7.sif fastqc SRR6466185_1.fastq.gz
+    singularity exec fastqc-0.11.9_cv7.sif fastqc B7_input_s_chr19.fastq.gz
 
 Environment control
 *******************
