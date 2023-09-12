@@ -320,10 +320,10 @@ awk<span class="w"> </span><span class="s1">&#39;/^&gt;/ {f=&quot;seq_&quot;++d}
 </span><span class="hll"><span class="w">    </span><span class="n">rev_single_seq</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">reverseSequence</span><span class="o">(</span><span class="n">splitted_seq</span><span class="o">)</span>
 </span><span class="hll">
 </span><span class="hll"><span class="w">    </span><span class="nl">emit:</span>
-</span><span class="w">    </span><span class="n">rev_single_seq</span>
-
-<span class="o">}</span>
-
+</span><span class="hll"><span class="w">    </span><span class="n">rev_single_seq</span>
+</span><span class="hll">
+</span><span class="hll"><span class="o">}</span>
+</span>
 <span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
 <span class="w">   </span><span class="n">out1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flow1</span><span class="o">(</span><span class="n">sequences_file</span><span class="o">)</span>
 <span class="w">   </span><span class="n">out2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flow2</span><span class="o">(</span><span class="n">sequences_file</span><span class="o">)</span>
