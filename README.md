@@ -60,15 +60,15 @@ Knowing concepts about Linux containers is recommended.
 
 ### Day 1: Write, modify, and run a complex pipeline
 
-* 14:30-15:30 More complex scripts: Directive and resuming
+* 14:30-15:30 More complex scripts: 
 * 15:30-16:00 Coffee break
-* 16:00-17:00 Decoupling resources, parameters and main script
+* 16:00-17:00 Directive and resuming
 
 ### Day 2: Linux containers
 
 * 09:30-11:00 - Linux containers: Docker & Singularity/Apptainer
 * 11:00-11.30 - Coffee break
-* 11:30-13.00 - 
+* 11:30-13.00 - Decoupling resources, parameters and main script
 
 ### Day 3: Run a Nextflow pipeline in different environments
 
