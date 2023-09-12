@@ -4,7 +4,6 @@
 3 Nextflow
 *******************
 
-
 Decoupling resources, parameters and Nextflow script
 =======================
 
