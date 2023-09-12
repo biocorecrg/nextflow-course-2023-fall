@@ -277,6 +277,19 @@ docker rm, docker rmi: clean up!
   docker rmi ubuntu:22.04
 
 
+Volumes
+-------
+
+Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.
+
+Syntax: **\--volume/-v** *host:container*
+
+.. code-block:: console
+  mkdir data
+  # We can also copy the FASTQ we used in data
+  docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/SRR6466185_1.fastq.gz 
+
+
 Major clean
 ***********
 

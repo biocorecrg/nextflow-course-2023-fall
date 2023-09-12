@@ -63,9 +63,9 @@ Program
 
 *Day 2: Linux containers*
 
-* 09:30-11:00 - Linux containers and Docker
+* 09:30-11:00 - Linux containers: Docker & Singularity/Apptainer
 * 11:00-11.30 - Coffee break
-* 11:30-13.00 - Singularity/Apptainer
+* 11:30-13.00 -
 
 *Day 3: Run a Nextflow pipeline in different environments*
 
