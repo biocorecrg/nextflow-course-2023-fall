@@ -302,6 +302,20 @@ Remove ALL non-running containers, images, etc. - **DO WITH MUCH MORE CARE!!!**
 
 * Reference: https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
 
+
+Volumes
+-------
+
+Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.
+
+Syntax: **\--volume/-v** *host:container*
+
+.. code-block:: console
+
+  mkdir data
+  # We can copy some FASTQ in data
+  docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/SRR6466185_1.fastq.gz
+
 Singularity
 ===========
 
