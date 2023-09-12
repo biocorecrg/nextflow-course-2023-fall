@@ -116,7 +116,7 @@ At this point we can make two different workflows to demonstrate how the new DSL
 
 .. literalinclude:: ../nextflow/test1/test1_b.nf
    :language: groovy
-   :emphasize-lines: 49-65
+   :emphasize-lines: 49-68
 
 The first workflow will just run like the previous script, while the second will "flatten" the output of the first process and will launch the second process on every single sequence.
 
