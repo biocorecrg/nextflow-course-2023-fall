@@ -69,7 +69,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#docker-images-list-images">docker images: list images</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-run-run-image-i-e-start-a-container">docker run: run image, i.e. start a container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-ps-check-containers-status">docker ps: check containers status</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-rm-docker-rmi-clean-up">docker rm, docker rmi: clean up!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#docker-rm-docker-rmi-clean-up">docker rm, docker rmi: clean up!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#volumes">Volumes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#major-clean">Major clean</a></li>
 </ul>
 </li>
@@ -351,6 +352,11 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:22.04</span>
 </pre></div>
 </div>
+</section>
+<section id="volumes">
+<h3>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h3>
+<p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
+<p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
 <section id="major-clean">
 <h4>Major clean<a class="headerlink" href="#major-clean" title="Link to this heading"></a></h4>
 <p>Check used space</p>
