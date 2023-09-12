@@ -67,7 +67,7 @@ Nextflow is based on the **dataflow programming model** which simplifies writing
 The tool takes care of **parallelizing the processes** without additional written code.
 The resulting applications are inherently parallel and can scale up or scale out transparently; there is no need to adapt them to a specific platform architecture.
 
-- **Facilitate the sharing and collaboration **
+- **Facilitate sharing and collaborative coding**
 
 Nextflow integrates the main code repositories such as BitBucket, GitHub, and GitLab. Since each module / sub-workflow is independent it makes it easier to code in parallel reducing the bottlenecks.
 
