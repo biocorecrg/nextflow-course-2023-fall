@@ -220,23 +220,6 @@ Executing it will show the emission of a tuple whose key is the common part of t
 We can reshape the channels in several ways and/or cross them using operators so that they can be used for a particular purpose. In brief, each "emission" of a channel can be used by a process for a specific purpose.  
 
 
-A special very powerful operator is **map**, that allows you reshaping the data in several ways. 
-It uses the `Grovvy's closure <https://www.nextflow.io/docs/latest/script.html#closures>`__ for modifying the input channel. In brief, a closure is a piece of code between curly brackets **{}** that can be passed as an argument of a function. It uses as input the implicit variable **it**:
-
-Here you can see an example:
-
-.. literalinclude:: ../nextflow/examples/map.nf
-   :language: groovy
-
-This will produce:
-
-.. code-block:: console
-
-	nextflow run map.nf
-	N E X T F L O W  ~  version 23.03.0-edge
-	Launching `map.nf` [irreverent_nightingale] DSL2 - revision: 48519e083e
-	[my id, /Users/lcozzuto/aaa/ropes-linux-mop2-2023/nextflow/examples/aa.txt, /Users/lcozzuto/aaa/ropes-linux-mop2-2023/nextflow/examples/bb.txt]
-
 Exercise
 -------------------------
 Using again the previous 3 `.txt` files ("aa.txt", "bb.txt", "cc.txt"), reshape the channels to emit:
@@ -263,6 +246,22 @@ See here the list of `Operators <https://www.nextflow.io/docs/latest/operator.ht
 |
 |
 
+A special very powerful operator is **map**, that allows you reshaping the data in several ways. 
+It uses the `Grovvy's closure <https://www.nextflow.io/docs/latest/script.html#closures>`__ for modifying the input channel. In brief, a closure is a piece of code between curly brackets **{}** that can be passed as an argument of a function. It uses as input the implicit variable **it**:
+
+Here you can see an example:
+
+.. literalinclude:: ../nextflow/examples/map.nf
+   :language: groovy
+
+This will produce:
+
+.. code-block:: console
+
+	nextflow run map.nf
+	N E X T F L O W  ~  version 23.03.0-edge
+	Launching `map.nf` [irreverent_nightingale] DSL2 - revision: 48519e083e
+	[my id, /Users/lcozzuto/aaa/ropes-linux-mop2-2023/nextflow/examples/aa.txt, /Users/lcozzuto/aaa/ropes-linux-mop2-2023/nextflow/examples/bb.txt]
 
 Processes
 -------------
