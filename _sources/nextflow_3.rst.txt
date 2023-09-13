@@ -35,6 +35,14 @@ Then are specified the resources needed for a class of processes labeled **bigme
    :lines: 3-17
    :emphasize-lines: 6-14
 
+.. tip::
+	You can add the default configuration for shell executions within to the nextflow.config file:
+
+.. code-block:: groovy
+
+	process {
+  		shell = ['/bin/bash', '-euo', 'pipefail']
+		...
 
 In the script **/test2/test2.nf file**, there are two processes to run two programs:
 
