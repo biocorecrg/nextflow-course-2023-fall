@@ -328,11 +328,10 @@ The solution is at **sol4.nf**. Here is the change:
 
 .. note::
 	When a shell script fails you might still have a 0 exit code and if an output file is generated Nextflow won't recognize an error. This is because in a bash pipeline exit code is the one from the last command. To change this behavior you should add at the beginning of your bash script the code:
+	.. code-block:: bash
 
-.. code-block:: bash
-
-	set -euxo pipefail
-	BASH CODE HERE
+		set -euxo pipefail
+		BASH CODE HERE
 
 
 
