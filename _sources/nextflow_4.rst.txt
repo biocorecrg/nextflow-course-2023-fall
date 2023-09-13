@@ -7,6 +7,7 @@
 Using Singularity
 =======================
 
+
 We recommend using Singularity instead of Docker in HPC environments.
 This can be done using the Nextflow parameter `-with-singularity` without changing the code.
 
