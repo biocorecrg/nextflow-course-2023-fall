@@ -37,8 +37,8 @@ Then are specified the resources needed for a class of processes labeled **bigme
 
 .. tip::
 	You can add the default configuration for shell executions within to the nextflow.config file:
-
 .. code-block:: groovy
+
 	process {
   		shell = ['/bin/bash', '-euo', 'pipefail']
 		...
