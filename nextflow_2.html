@@ -674,6 +674,10 @@ awk<span class="w"> </span><span class="s1">&#39;/^&gt;/ {f=&quot;seq_&quot;++d}
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a shell script fails you might still have a 0 exit code and if an output file is generated Nextflow won’t recognize an error. This is because in a bash pipeline exit code is the one from the last command. To change this behavior you should add at the beginning of your bash script the code:</p>
+</div>
 </section>
 </section>
 </section>
