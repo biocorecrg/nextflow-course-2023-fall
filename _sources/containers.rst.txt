@@ -285,6 +285,7 @@ Docker containers are fully isolated. It is necessary to mount volumes in order 
 Syntax: **\--volume/-v** *host:container*
 
 .. code-block:: console
+
   mkdir data
   # We can also copy the FASTQ we used in data
   docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/B7_input_s_chr19.fastq.gz 

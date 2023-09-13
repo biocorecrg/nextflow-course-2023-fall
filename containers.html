@@ -358,6 +358,11 @@
 <h3>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h3>
 <p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
 <p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir data</span>
+<span class="gp"># </span>We<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>copy<span class="w"> </span>the<span class="w"> </span>FASTQ<span class="w"> </span>we<span class="w"> </span>used<span class="w"> </span><span class="k">in</span><span class="w"> </span>data
+<span class="go">docker run --volume $(pwd)/data:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 fastqc /scratch/B7_input_s_chr19.fastq.gz</span>
+</pre></div>
+</div>
 <section id="major-clean">
 <h4>Major clean<a class="headerlink" href="#major-clean" title="Link to this heading"></a></h4>
 <p>Check used space</p>
