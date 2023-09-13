@@ -11,7 +11,6 @@ DSL for data-driven computational pipelines. `www.nextflow.io <https://www.nextf
 .. image:: images/nextflow_logo_deep.png
   :width: 400
 
-
 What is Nextflow?
 -----------------
 
